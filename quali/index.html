@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Demo-Vorbereitung | braingineering.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+<style>
+  :root {
+    --primary: #122D6E;
+    --accent: #FF5100;
+    --white: #FFFFFF;
+    --surface: #F0F2F8;
+    --gray: #6B7280;
+    --gray-light: #E5E7EB;
+    --gray-dark: #374151;
+    --green: #059669;
+    --green-light: #ECFDF5;
+    --gradient-blue: linear-gradient(135deg, #122D6E 0%, #1a3fa0 50%, #2255d4 100%);
+    --gradient-orange: linear-gradient(135deg, #FF5100 0%, #e03d00 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--surface);
+    color: var(--primary);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 24px 16px 64px; }
+
+  /* Header */
+  .brandbar { display: flex; align-items: center; gap: 9px; margin-bottom: 20px; }
+  .bolt-badge {
+    width: 30px; height: 30px; background: var(--accent); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .wordmark { font-weight: 800; font-size: 18px; color: var(--primary); letter-spacing: -0.01em; }
+
+  /* Progress */
+  .progress { display: flex; gap: 6px; margin-bottom: 22px; }
+  .progress .seg { height: 5px; flex: 1; border-radius: 99px; background: var(--gray-light); transition: background .25s; }
+  .progress .seg.active { background: var(--accent); }
+  .progress .seg.done { background: var(--primary); }
+
+  /* Card */
+  .card {
+    background: var(--white); border-radius: 16px; padding: 30px;
+    box-shadow: 0 2px 16px rgba(18,45,110,0.08);
+  }
+  @media (max-width: 480px) { .card { padding: 22px; } .wrap { padding: 18px 12px 56px; } }
+
+  .eyebrow { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px; }
+  h1 { font-size: 23px; font-weight: 800; line-height: 1.25; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .lead { font-size: 14px; color: var(--gray); margin-bottom: 4px; }
+
+  .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 2px solid var(--surface); }
+  .section-num { width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+  .section-title { font-size: 17px; font-weight: 800; }
+  .section-desc { font-size: 13px; color: var(--gray); margin-top: 6px; }
+
+  .q { margin-bottom: 20px; }
+  .q-label { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .q-label .req { color: var(--accent); }
+  .q-sub { font-size: 13px; color: var(--gray); margin-bottom: 10px; }
+
+  input[type=text], input[type=email], textarea, select {
+    width: 100%; padding: 11px 13px; border-radius: 9px; border: 1.5px solid var(--gray-light);
+    font-size: 15px; font-family: inherit; color: var(--primary); background: var(--white);
+    transition: border-color .15s;
+  }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary); }
+  input.invalid, select.invalid { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 96px; }
+  select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+  /* Radio list */
+  .radio-list { display: flex; flex-direction: column; gap: 7px; }
+  .opt {
+    display: flex; align-items: center; gap: 11px; padding: 11px 14px; border-radius: 9px;
+    border: 1.5px solid var(--gray-light); background: var(--white); cursor: pointer;
+    font-size: 14.5px; transition: all .15s; color: var(--gray-dark); user-select: none;
+  }
+  .opt:hover { border-color: rgba(18,45,110,0.35); }
+  .opt.sel { border-color: var(--primary); background: var(--surface); }
+  .opt .dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--gray); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color .15s; }
+  .opt.sel .dot { border-color: var(--primary); }
+  .opt.sel .dot::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); }
+  .opt.check .dot { border-radius: 5px; }
+  .opt.check.sel .dot::after { width: 0; height: 0; border: none; content: '\2713'; color: var(--primary); font-size: 13px; font-weight: 800; }
+
+  /* Frequency buttons */
+  .freq-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .freq-btn {
+    padding: 9px 15px; border-radius: 9px; border: 1.5px solid var(--gray-light);
+    background: var(--white); color: var(--gray-dark); cursor: pointer; font-size: 13.5px;
+    font-family: inherit; font-weight: 500; transition: all .15s;
+  }
+  .freq-btn:hover { border-color: rgba(18,45,110,0.35); }
+  .freq-btn.sel-hi { background: var(--accent); color: var(--white); border-color: var(--accent); font-weight: 700; }
+  .freq-btn.sel-mid { background: var(--primary); color: var(--white); border-color: var(--primary); font-weight: 700; }
+  .freq-btn.sel-lo { background: var(--primary); color: var(--white); border-color: var(--primary); font-weight: 700; }
+
+  .freq-q { padding: 14px 0; border-bottom: 1px solid var(--surface); }
+  .freq-q:last-child { border-bottom: none; }
+  .freq-q .q-label { margin-bottom: 2px; }
+
+  .info-box { background: var(--surface); border-radius: 10px; padding: 14px 16px; font-size: 12.5px; color: var(--gray-dark); margin-top: 10px; display: flex; gap: 10px; align-items: flex-start; }
+  .info-box i { color: var(--accent); font-size: 17px; margin-top: 1px; flex-shrink: 0; }
+
+  /* Agent preview */
+  .agent-card { background: var(--gradient-blue); border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; color: var(--white); }
+  .agent-card .name { font-weight: 800; font-size: 16px; }
+  .agent-card .role { font-size: 12.5px; color: rgba(255,255,255,0.7); font-weight: 700; margin-bottom: 7px; }
+  .agent-card .desc { font-size: 13px; color: rgba(255,255,255,0.92); line-height: 1.55; }
+  .hub-note { font-size: 13px; color: var(--gray-dark); background: var(--surface); border-radius: 10px; padding: 14px 16px; margin-top: 4px; display: flex; gap: 10px; align-items: flex-start; }
+  .hub-note i { color: var(--accent); font-size: 17px; margin-top: 1px; flex-shrink: 0; }
+
+  /* Nav buttons */
+  .nav-row { margin-top: 26px; }
+  .btn-primary {
+    width: 100%; padding: 14px; border-radius: 11px; border: none; background: var(--accent);
+    color: var(--white); font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: filter .15s;
+  }
+  .btn-primary:hover { filter: brightness(0.95); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+  .btn-ghost {
+    width: 100%; padding: 12px; border-radius: 11px; background: transparent;
+    color: var(--gray); border: 1.5px solid var(--gray-light); font-size: 14px; font-family: inherit;
+    cursor: pointer; margin-top: 8px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-ghost:hover { border-color: rgba(18,45,110,0.35); color: var(--primary); }
+
+  .err-msg { color: var(--accent); font-size: 13px; margin-top: 12px; display: none; align-items: center; gap: 6px; }
+  .err-msg.show { display: flex; }
+
+  .hidden { display: none; }
+
+  /* Confirmation */
+  .confirm-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--green-light); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto 16px; }
+  .confirm-card { text-align: center; }
+  .confirm-card h1 { margin-bottom: 10px; }
+  .confirm-card .lead { font-size: 14.5px; line-height: 1.6; max-width: 400px; margin: 0 auto; }
+
+  .footer-note { text-align: center; font-size: 11.5px; color: var(--gray); margin-top: 20px; }
+  .footer-note .dsgvo { display: inline-flex; align-items: center; gap: 5px; }
+
+  .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: var(--white); border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brandbar">
+    <div class="bolt-badge">
+      <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 1L1 10.5H7L5.5 17L13 7.5H7L8.5 1Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="wordmark">braingineering<span style="color:var(--primary);">.</span></span>
+  </div>
+
+  <div class="progress" id="progress">
+    <div class="seg active"></div>
+    <div class="seg"></div>
+    <div class="seg"></div>
+  </div>
+
+  <!-- ============ STEP 1 ============ -->
+  <div class="card" id="step1">
+    <div class="eyebrow">Vorbereitung auf Ihre Demo</div>
+    <h1>Damit wir die Demo auf Ihr Büro zuschneiden</h1>
+    <p class="lead">Ein paar kurze Angaben vorab. So zeigen wir Ihnen in der Demo gezielt das, was für Ihr Büro relevant ist, statt alles der Reihe nach.</p>
+
+    <div style="height:18px;"></div>
+    <div class="section-head">
+      <div class="section-num">1</div>
+      <div><div class="section-title">Über Ihr Büro</div></div>
+    </div>
+
+    <div class="q">
+      <div class="q-label">Firmenname <span class="req">*</span></div>
+      <input type="text" id="f_firma" placeholder="z.B. Mustermann Engineering GmbH" />
+    </div>
+    <div class="q">
+      <div class="q-label">Ihr Name <span class="req">*</span></div>
+      <input type="text" id="f_name" placeholder="Vor- und Nachname" />
+    </div>
+    <div class="q">
+      <div class="q-label">Ihre E-Mail <span class="req">*</span></div>
+      <div class="q-sub">An diese Adresse haben wir Ihnen den Demo-Termin geschickt.</div>
+      <input type="email" id="f_email" placeholder="name@firma.at" />
+    </div>
+    <div class="q">
+      <div class="q-label">Ihre Position / Rolle <span class="req">*</span></div>
+      <input type="text" id="f_position" placeholder="z.B. Geschäftsführer, Projektleiter" />
+    </div>
+    <div class="q">
+      <div class="q-label">Kerndienstleistung <span class="req">*</span></div>
+      <div class="q-sub">Was ist Ihr Fachgebiet?</div>
+      <input type="text" id="f_fach" placeholder="z.B. TGA-Planung, Statik, Vermessung, Elektrotechnik" />
+    </div>
+    <div class="q">
+      <div class="q-label">Bundesland <span class="req">*</span></div>
+      <select id="f_bundesland">
+        <option value="">Bitte wählen…</option>
+        <option>Wien</option><option>Niederösterreich</option><option>Oberösterreich</option>
+        <option>Steiermark</option><option>Kärnten</option><option>Salzburg</option>
+        <option>Tirol</option><option>Vorarlberg</option><option>Burgenland</option>
+      </select>
+    </div>
+    <div class="q">
+      <div class="q-label">Teamgröße <span class="req">*</span></div>
+      <div class="radio-list" data-radio="team">
+        <div class="opt" data-val="1-2">1–2 Personen</div>
+        <div class="opt" data-val="3-5">3–5 Personen</div>
+        <div class="opt" data-val="6-15">6–15 Personen</div>
+        <div class="opt" data-val="16+">Mehr als 15 Personen</div>
+      </div>
+    </div>
+    <div class="q">
+      <div class="q-label">Microsoft 365</div>
+      <div class="q-sub">Outlook, Teams, SharePoint, OneDrive</div>
+      <div class="radio-list" data-radio="ms365">
+        <div class="opt" data-val="Ja">Ja</div>
+        <div class="opt" data-val="Teilweise">Teilweise</div>
+        <div class="opt" data-val="Nein">Nein</div>
+      </div>
+    </div>
+    <div class="q">
+      <div class="q-label">KI-Erfahrung</div>
+      <div class="q-sub">z.B. ChatGPT, Copilot, Gemini</div>
+      <div class="radio-list" data-radio="ki">
+        <div class="opt" data-val="regular">Ja, nutze ich regelmäßig</div>
+        <div class="opt" data-val="tried">Ja, ausprobiert</div>
+        <div class="opt" data-val="no">Nein, noch nicht</div>
+      </div>
+    </div>
+    <div class="q">
+      <div class="q-label">Wer entscheidet über eine mögliche Zusammenarbeit? <span class="req">*</span></div>
+      <div class="radio-list" data-radio="entscheidung">
+        <div class="opt" data-val="self">Ich entscheide selbst</div>
+        <div class="opt" data-val="partner">Ich entscheide mit einem/r GeschäftspartnerIn</div>
+        <div class="opt" data-val="boss">Mein/e Vorgesetzte/r entscheidet</div>
+        <div class="opt" data-val="scout">Ich informiere mich vorab für jemand anderen</div>
+      </div>
+    </div>
+
+    <div class="err-msg" id="err1"><i class="ri-error-warning-line"></i><span>Bitte füllen Sie die markierten Pflichtfelder aus.</span></div>
+    <div class="nav-row">
+      <button class="btn-primary" id="to2">Weiter <i class="ri-arrow-right-line"></i></button>
+    </div>
+  </div>
+
+  <!-- ============ STEP 2 ============ -->
+  <div class="card hidden" id="step2">
+    <div class="section-head">
+      <div class="section-num">2</div>
+      <div>
+        <div class="section-title">Wie oft kommen diese Situationen vor?</div>
+        <div class="section-desc">Denken Sie an einen typischen Arbeitsmonat in Ihrem Büro.</div>
+      </div>
+    </div>
+
+    <div id="freqContainer"></div>
+
+    <div class="q hidden" id="kitoolsBlock" style="margin-top:8px;">
+      <div class="q-label">Welche KI-Tools nutzen Sie oder Ihr Team aktuell?</div>
+      <div class="radio-list" data-multi="kitools">
+        <div class="opt check" data-val="chatgpt">ChatGPT</div>
+        <div class="opt check" data-val="copilot">Microsoft Copilot</div>
+        <div class="opt check" data-val="gemini">Google Gemini</div>
+        <div class="opt check" data-val="claude">Claude</div>
+        <div class="opt check" data-val="custom">Selbst gebaute</div>
+        <div class="opt check" data-val="other">Andere</div>
+      </div>
+    </div>
+
+    <div class="q" style="margin-top:8px;">
+      <div class="q-label">Hat Ihr Team bereits eine KI-Schulung nach EU AI Act absolviert?</div>
+      <div class="radio-list" data-radio="aiact">
+        <div class="opt" data-val="yes">Ja, bereits absolviert</div>
+        <div class="opt" data-val="planned">Geplant</div>
+        <div class="opt" data-val="no">Nein, noch nicht</div>
+        <div class="opt" data-val="unknown">Davon höre ich zum ersten Mal</div>
+      </div>
+      <div class="info-box">
+        <i class="ri-information-line"></i>
+        <span>Seit 2. Februar 2025 müssen Unternehmen, die KI einsetzen, sicherstellen, dass Mitarbeitende über ausreichende KI-Kompetenz verfügen (Art. 4 EU AI Act). Ab August 2026 wird aktiv kontrolliert.</span>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn-primary" id="to3">Weiter <i class="ri-arrow-right-line"></i></button>
+      <button class="btn-ghost" id="back2"><i class="ri-arrow-left-line"></i> Zurück</button>
+    </div>
+  </div>
+
+  <!-- ============ STEP 3 ============ -->
+  <div class="card hidden" id="step3">
+    <div id="previewArea"></div>
+
+    <div class="q" style="margin-top:4px;">
+      <div class="q-label">Gibt es etwas, das Sie uns noch mitgeben wollen?</div>
+      <div class="q-sub">z.B. konkrete Herausforderungen, Fragen zu KI, oder Themen, die Ihnen wichtig sind.</div>
+      <textarea id="f_freitext" placeholder="Optional — alles, was uns hilft, die Demo für Sie vorzubereiten."></textarea>
+    </div>
+
+    <div class="err-msg" id="err3"><i class="ri-error-warning-line"></i><span>Beim Absenden ist etwas schiefgelaufen. Bitte versuchen Sie es erneut.</span></div>
+    <div class="nav-row">
+      <button class="btn-primary" id="submitBtn">Absenden <i class="ri-check-line"></i></button>
+      <button class="btn-ghost" id="back3"><i class="ri-arrow-left-line"></i> Zurück</button>
+    </div>
+  </div>
+
+  <!-- ============ CONFIRMATION ============ -->
+  <div class="card confirm-card hidden" id="done">
+    <div class="confirm-icon"><i class="ri-check-line"></i></div>
+    <h1>Danke für Ihre Angaben!</h1>
+    <p class="lead">Wir bereiten Ihre Demo basierend auf Ihren Antworten vor und zeigen Ihnen gezielt die Agenten, die für Ihr Büro relevant sind. Wir freuen uns auf das Gespräch.</p>
+  </div>
+
+  <div class="footer-note">
+    <span class="dsgvo"><i class="ri-shield-check-line" style="color:var(--accent);"></i> braingineering GmbH — DSGVO-konform auf EU-Servern</span>
+  </div>
+</div>
+
+<script>
+/* ===================== CONFIG ===================== */
+// Zeigt auf die Vercel Serverless Function (gleiche Domain).
+// Zum lokalen Testen ohne Backend einfach auf "" setzen -> Demo-Modus.
+const SUBMIT_ENDPOINT = "/api/submit";
+
+/* ===================== DATA ===================== */
+const FREQ_OPTS = [
+  { val: "daily",      label: "Täglich",             score: 3 },
+  { val: "weekly",     label: "Mehrmals pro Woche",  score: 2 },
+  { val: "occasional", label: "Gelegentlich",        score: 1 },
+  { val: "never",      label: "Selten oder nie",     score: 0 },
+];
+
+const AGENTS = [
+  { id: "normen",       agent: "Normbert",      role: "Normen-Experte",
+    frage: "Muss Ihr Team Normen, Richtlinien oder Gesetze nachschlagen?",
+    sub: "z.B. ÖNORMen, OIB-Richtlinien, EN-Normen, technische Regelwerke",
+    desc: "Durchsucht Ihre Normen-Bibliothek inhaltlich, zitiert relevante Passagen und stellt Querverweise her. Statt langer Suche in PDFs bekommen Ihre Techniker in Sekunden die richtige Stelle." },
+  { id: "projektsuche", agent: "Archibald",     role: "Projektarchivar",
+    frage: "Sucht Ihr Team nach Unterlagen aus früheren Projekten?",
+    sub: "z.B. Pläne, Berechnungen, Schriftverkehr, Referenzprojekte als Vorlage",
+    desc: "Durchsucht Ihr gesamtes Projektarchiv nach Inhalten, nicht nur nach Dateinamen. Findet ähnliche Projekte, relevante Berechnungen und Vorlagen aus vergangenen Aufträgen." },
+  { id: "email",        agent: "Mailanie",      role: "E-Mail-Expertin",
+    frage: "Stoßen Sie bei der Suche in Outlook & Co. an Grenzen?",
+    sub: "z.B. wenn die Suche alte Abstimmungen, Freigaben oder Anhänge aus laufenden Projekten einfach nicht findet",
+    desc: "Findet projektbezogene E-Mails und Anhänge über alle Postfächer hinweg und verfasst E-Mails in Ihrem Stil. Kein Durchklicken mehr durch hunderte Nachrichten." },
+  { id: "ausschreibung",agent: "Bietmar",       role: "Ausschreibungs-Experte",
+    frage: "Arbeiten Sie mit Leistungsverzeichnissen oder Ausschreibungen?",
+    sub: "z.B. LV-Erstellung, Angebotsbewertung, Prüfung ob sich eine Ausschreibung lohnt",
+    desc: "Analysiert Ausschreibungen und bewertet, ob sich ein Angebot lohnt. Vergleicht Anforderungen mit Ihren bisherigen Projekten und Kapazitäten." },
+  { id: "protokolle",   agent: "Protokolliver", role: "Protokollierer",
+    frage: "Erstellen Sie regelmäßig Protokolle oder Gutachten?",
+    sub: "z.B. Baustellenprotokolle, Besprechungsnotizen, Jour-Fixe-Dokumentation, Gutachten",
+    desc: "Erstellt strukturierte Protokolle aus Notizen oder Aufnahmen und verknüpft sie mit dem jeweiligen Projekt. Spart die Nacharbeit nach jedem Termin." },
+];
+
+/* ===================== STATE ===================== */
+const state = {
+  firma:"", name:"", email:"", position:"", fach:"", bundesland:"",
+  team:"", ms365:"", ki:"", entscheidung:"",
+  freq:{}, kitools:[], aiact:"", freitext:""
+};
+
+/* ===================== HELPERS ===================== */
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+
+// URL-Parameter (optionaler Prefill / spätere Token-Erweiterung)
+const params = new URLSearchParams(location.search);
+["firma","name","email","bundesland"].forEach(k => {
+  const v = params.get(k);
+  if (v) {
+    state[k] = v;
+    const el = $("#f_" + (k === "name" ? "name" : k));
+    if (el) el.value = v;
+  }
+});
+
+function setStep(n) {
+  ["step1","step2","step3","done"].forEach(id => $("#"+id).classList.add("hidden"));
+  const segs = $$("#progress .seg");
+  segs.forEach((s,i) => { s.className = "seg" + (i < n-1 ? " done" : i === n-1 ? " active" : ""); });
+  if (n === 4) { $("#progress").style.display = "none"; $("#done").classList.remove("hidden"); window.scrollTo(0,0); return; }
+  $("#step"+n).classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+
+/* ---- single-select radios ---- */
+$$("[data-radio]").forEach(group => {
+  const key = group.getAttribute("data-radio");
+  group.querySelectorAll(".opt").forEach(opt => {
+    opt.addEventListener("click", () => {
+      group.querySelectorAll(".opt").forEach(o => o.classList.remove("sel"));
+      opt.classList.add("sel");
+      state[key] = opt.getAttribute("data-val");
+      if (key === "ki") toggleKiTools();
+    });
+  });
+});
+
+/* ---- multi-select ---- */
+$$("[data-multi]").forEach(group => {
+  const key = group.getAttribute("data-multi");
+  group.querySelectorAll(".opt").forEach(opt => {
+    opt.addEventListener("click", () => {
+      const val = opt.getAttribute("data-val");
+      opt.classList.toggle("sel");
+      if (opt.classList.contains("sel")) state[key].push(val);
+      else state[key] = state[key].filter(v => v !== val);
+    });
+  });
+});
+
+/* ---- text inputs ---- */
+const bind = (id, key) => { const el = $(id); el.addEventListener("input", () => state[key] = el.value.trim()); };
+bind("#f_firma","firma"); bind("#f_name","name"); bind("#f_email","email");
+bind("#f_position","position"); bind("#f_fach","fach"); bind("#f_freitext","freitext");
+$("#f_bundesland").addEventListener("change", e => state.bundesland = e.target.value);
+
+/* ---- conditional: KI-Tools ---- */
+function toggleKiTools() {
+  const show = state.ki === "regular" || state.ki === "tried";
+  $("#kitoolsBlock").classList.toggle("hidden", !show);
+  if (!show) {
+    state.kitools = [];
+    $$('[data-multi="kitools"] .opt').forEach(o => o.classList.remove("sel"));
+  }
+}
+
+/* ---- build frequency questions ---- */
+function buildFreq() {
+  const c = $("#freqContainer");
+  c.innerHTML = "";
+  AGENTS.forEach(a => {
+    const wrap = document.createElement("div");
+    wrap.className = "freq-q";
+    wrap.innerHTML =
+      '<div class="q-label">'+a.frage+'</div>' +
+      '<div class="q-sub">'+a.sub+'</div>' +
+      '<div class="freq-row" data-freq="'+a.id+'"></div>';
+    c.appendChild(wrap);
+    const row = wrap.querySelector(".freq-row");
+    FREQ_OPTS.forEach(o => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "freq-btn"; b.textContent = o.label;
+      b.addEventListener("click", () => {
+        row.querySelectorAll(".freq-btn").forEach(x => x.className = "freq-btn");
+        b.className = "freq-btn " + (o.score === 3 ? "sel-hi" : o.score >= 1 ? "sel-mid" : "sel-lo");
+        state.freq[a.id] = o.val;
+      });
+      row.appendChild(b);
+    });
+  });
+}
+buildFreq();
+
+/* ---- validation step 1 ---- */
+function validateStep1() {
+  const required = [
+    ["f_firma","firma"], ["f_name","name"], ["f_email","email"],
+    ["f_position","position"], ["f_fach","fach"], ["f_bundesland","bundesland"]
+  ];
+  let ok = true;
+  required.forEach(([id,key]) => {
+    const el = $("#"+id);
+    const empty = !state[key];
+    el.classList.toggle("invalid", empty);
+    if (empty) ok = false;
+  });
+  // email format
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.email);
+  if (!emailOk) { $("#f_email").classList.add("invalid"); ok = false; }
+  // team + entscheidung (radios)
+  if (!state.team) ok = false;
+  if (!state.entscheidung) ok = false;
+  $("#err1").classList.toggle("show", !ok);
+  return ok;
+}
+
+/* ---- build preview step 3 ---- */
+function buildPreview() {
+  const area = $("#previewArea");
+  const scored = AGENTS
+    .map(a => ({ ...a, score: (FREQ_OPTS.find(o => o.val === state.freq[a.id]) || {}).score || 0 }))
+    .filter(a => a.score > 0)
+    .sort((a,b) => b.score - a.score);
+
+  if (scored.length === 0) {
+    area.innerHTML =
+      '<div class="eyebrow">Fast geschafft</div>' +
+      '<h1>Noch eine letzte Frage</h1>' +
+      '<p class="lead">Dann sind wir fertig.</p><div style="height:8px;"></div>';
+    return;
+  }
+
+  const top = scored.slice(0,3);
+  let html =
+    '<div class="eyebrow">Das zeigen wir Ihnen in der Demo</div>' +
+    '<h1>Diese Agenten sind für Ihr Büro relevant</h1>' +
+    '<p class="lead">Basierend auf Ihren Antworten richten wir die Demo auf diese Schwerpunkte aus.</p>' +
+    '<div style="height:16px;"></div>';
+  top.forEach(a => {
+    html +=
+      '<div class="agent-card">' +
+        '<div class="name">'+a.agent+'</div>' +
+        '<div class="role">'+a.role+'</div>' +
+        '<div class="desc">'+a.desc+'</div>' +
+      '</div>';
+  });
+  if (scored.length > 3) {
+    html += '<div class="hub-note"><i class="ri-add-circle-line"></i><span>+ '+(scored.length-3)+' weitere Agenten, die wir im Gespräch besprechen können.</span></div>';
+  }
+  html += '<div class="hub-note"><i class="ri-stack-line"></i><span>Alle Agenten sind Teil des Engineering AI Hub — DSGVO-konform auf EU-Servern, ohne Lizenzkosten pro Nutzer.</span></div>';
+  html += '<div style="height:8px;"></div>';
+  area.innerHTML = html;
+}
+
+/* ===================== NAV ===================== */
+$("#to2").addEventListener("click", () => { if (validateStep1()) setStep(2); });
+$("#back2").addEventListener("click", () => setStep(1));
+$("#to3").addEventListener("click", () => { buildPreview(); setStep(3); });
+$("#back3").addEventListener("click", () => setStep(2));
+
+/* ===================== SUBMIT ===================== */
+function computePayload() {
+  const scored = AGENTS
+    .map(a => ({ agent: a.agent, freq: state.freq[a.id] || "never",
+                 score: (FREQ_OPTS.find(o => o.val === state.freq[a.id]) || {}).score || 0 }))
+    .sort((a,b) => b.score - a.score);
+  const totalScore = scored.reduce((s,a) => s + a.score, 0);
+  const recommend = scored.filter(a => a.score > 0).slice(0,3).map(a => a.agent);
+  const flags = [];
+  if (state.team === "1-2") flags.push("Teamgröße 1–2");
+  if (state.entscheidung === "scout") flags.push("Nicht Entscheider");
+  if (totalScore === 0) flags.push("Kein relevanter Schmerzpunkt");
+  if (state.aiact === "no" || state.aiact === "unknown") flags.push("Keine KI-Schulung (EU AI Act)");
+  if (state.bundesland === "Niederösterreich") flags.push("TIP NÖ möglich");
+  return { ...state, score: totalScore, empfohleneAgenten: recommend, flags,
+           submittedAt: new Date().toISOString() };
+}
+
+$("#submitBtn").addEventListener("click", async () => {
+  const btn = $("#submitBtn");
+  $("#err3").classList.remove("show");
+  const payload = computePayload();
+
+  if (!SUBMIT_ENDPOINT) {
+    // Demo-Modus: noch kein Backend verbunden
+    console.log("Demo-Modus — Payload, der ans Backend ginge:", payload);
+    setStep(4);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Wird gesendet…';
+  try {
+    const res = await fetch(SUBMIT_ENDPOINT, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    setStep(4);
+  } catch (e) {
+    console.error(e);
+    $("#err3").classList.add("show");
+    btn.disabled = false;
+    btn.innerHTML = 'Absenden <i class="ri-check-line"></i>';
+  }
+});
+</script>
+</body>
+</html>

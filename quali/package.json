@@ -1,0 +1,7 @@
+{
+  "name": "braingineering-demo-prep",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo-Vorbereitungs-Formular mit HubSpot-Notiz und Briefing-Mail",
+  "type": "module"
+}
