@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering AI Hub · Verlässliche KI für Ingenieurbüros</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+  :root{
+    --primary:#122D6E;
+    --accent:#FF5100;
+    --white:#FFFFFF;
+    --surface:#F0F2F8;
+    --gradient-blue:linear-gradient(135deg,#122D6E 0%,#1a3fa0 50%,#2255d4 100%);
+    --gradient-orange:linear-gradient(135deg,#FF5100 0%,#e03d00 100%);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Manrope',sans-serif;color:var(--primary);background:var(--white);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 60px;}
+  @media(max-width:768px){.wrap{padding:0 24px;}}
+
+  /* ---------- NAV ---------- */
+  nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 60px;background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(18,45,110,0.08);}
+  @media(max-width:768px){nav{padding:14px 24px;}}
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-badge{width:30px;height:30px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .logo-text{font-weight:800;font-size:20px;color:var(--primary);letter-spacing:-0.02em;}
+  .nav-step{display:none;}
+  @media(min-width:900px){.nav-step{display:flex;gap:6px;font-size:13px;font-weight:700;color:rgba(18,45,110,0.45);align-items:center;}
+  .nav-step a{color:rgba(18,45,110,0.45);text-decoration:none;padding:4px 2px;transition:color .2s;}
+  .nav-step a:hover{color:var(--accent);}}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;background:var(--gradient-blue);color:var(--white);overflow:hidden;padding:90px 0 110px;}
+  .hero .blob{position:absolute;border-radius:50%;background:var(--gradient-orange);filter:blur(10px);opacity:0.55;}
+  .hero .blob1{width:380px;height:380px;top:-160px;right:-120px;}
+  .hero .blob2{width:240px;height:240px;bottom:-140px;left:-80px;opacity:0.35;}
+  .hero-inner{position:relative;z-index:2;max-width:760px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--white);background:rgba(255,255,255,0.12);padding:7px 14px;border-radius:100px;margin-bottom:24px;}
+  .eyebrow i{color:var(--accent);}
+  .hero h1{font-size:clamp(34px,5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin-bottom:22px;}
+  .hero h1 .hl{color:#ffb38f;}
+  .hero p.lead{font-size:clamp(17px,2vw,21px);color:rgba(255,255,255,0.82);max-width:620px;margin-bottom:34px;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:22px;}
+  .hero-meta div{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:rgba(255,255,255,0.9);}
+  .hero-meta i{color:var(--accent);font-size:19px;}
+
+  /* ---------- SECTION FRAME ---------- */
+  section{padding:84px 0;}
+  .section-head{max-width:680px;margin-bottom:54px;}
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .kicker{font-size:14px;font-weight:800;letter-spacing:0.04em;color:var(--accent);text-transform:uppercase;margin-bottom:12px;}
+  h2{font-size:clamp(28px,3.4vw,40px);font-weight:800;letter-spacing:-0.025em;line-height:1.1;margin-bottom:16px;}
+  .section-head p{font-size:18px;color:rgba(18,45,110,0.7);}
+  .light{background:var(--surface);}
+
+  /* ---------- DIAGRAM ---------- */
+  .diagram{display:grid;grid-template-columns:1fr;gap:0;position:relative;}
+  .flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:0;}
+  @media(max-width:900px){.flow{grid-template-columns:1fr;gap:14px;}}
+  .flow-node{background:var(--white);border:2px solid rgba(18,45,110,0.1);border-radius:18px;padding:28px 24px;text-align:center;box-shadow:0 4px 24px rgba(18,45,110,0.06);}
+  .flow-node .ic{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;}
+  .flow-node h4{font-size:18px;font-weight:800;margin-bottom:8px;}
+  .flow-node p{font-size:14px;color:rgba(18,45,110,0.66);line-height:1.45;}
+  .ic-data{background:rgba(18,45,110,0.08);color:var(--primary);}
+  .ic-index{background:var(--gradient-orange);color:#fff;}
+  .ic-agent{background:var(--gradient-blue);color:#fff;}
+  .arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:30px;padding:0 10px;}
+  @media(max-width:900px){.arrow{transform:rotate(90deg);padding:0;}}
+  .flow-tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+
+  .pill-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px;}
+  .pill{display:inline-flex;align-items:center;gap:6px;background:var(--white);border:1.5px solid rgba(18,45,110,0.12);border-radius:100px;padding:8px 15px;font-size:13px;font-weight:600;color:var(--primary);}
+  .pill i{color:var(--accent);}
+
+  /* security strip */
+  .secure-strip{margin-top:46px;background:var(--gradient-blue);border-radius:20px;padding:38px 40px;color:#fff;display:flex;align-items:center;gap:26px;flex-wrap:wrap;}
+  .secure-strip .lock{width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:32px;color:#fff;flex-shrink:0;}
+  .secure-strip h4{font-size:21px;font-weight:800;margin-bottom:6px;}
+  .secure-strip p{font-size:15px;color:rgba(255,255,255,0.82);max-width:680px;}
+  .secure-tags{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;}
+
+  /* ---------- MODELLE & EU-SOUVERÄNITÄT ---------- */
+  .models-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px;}
+  @media(max-width:820px){.models-grid{grid-template-columns:1fr;}}
+  .model-card{background:var(--white);border:1.5px solid rgba(18,45,110,0.1);border-radius:20px;padding:30px;box-shadow:0 4px 24px rgba(18,45,110,0.05);position:relative;overflow:hidden;}
+  .model-card .mc-logos{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .model-card .mc-logos .ml{width:48px;height:48px;border-radius:13px;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .model-card .mc-logos .ml svg{width:30px;height:30px;}
+  .model-card .mc-logos .ml.lead{background:var(--accent);}
+  .model-card h3{font-size:19px;font-weight:800;color:var(--primary);margin-bottom:10px;line-height:1.25;}
+  .model-card p{font-size:14.5px;color:rgba(18,45,110,0.72);line-height:1.55;margin:0 0 12px;}
+  .model-card p:last-child{margin-bottom:0;}
+  .model-card .mc-pill{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:800;color:var(--accent);background:rgba(255,81,0,0.08);padding:7px 13px;border-radius:100px;margin-top:4px;}
+  .model-card .mc-pill svg{width:15px;height:15px;}
+  /* EU variant */
+  .model-card.eu{background:var(--gradient-blue);border-color:transparent;color:#fff;}
+  .model-card.eu h3{color:#fff;}
+  .model-card.eu p{color:rgba(255,255,255,0.82);}
+  .model-card.eu .mc-flag{position:absolute;top:-30px;right:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;}
+  .model-card.eu .mc-flag svg{width:96px;height:96px;opacity:.9;}
+  .model-card.eu .mc-now{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:#ffb38f;background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:100px;margin-top:4px;}
+  .model-card.eu .mc-now svg{width:15px;height:15px;flex-shrink:0;}
+  .model-card.eu .mc-roadmap{margin-top:16px;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;font-size:13px;color:rgba(255,255,255,0.78);line-height:1.5;}
+  .model-card.eu .mc-roadmap b{color:#fff;font-weight:800;}
+  .secure-tags span{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:600;color:rgba(255,255,255,0.92);}
+  .secure-tags i{color:#ffb38f;}
+
+  /* ---------- "MORE AGENTS" CONNECTED VISUAL ---------- */
+  .synergy{display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center;}
+  @media(max-width:900px){.synergy{grid-template-columns:1fr;gap:34px;}}
+  .synergy-visual{position:relative;aspect-ratio:1/1;max-width:420px;margin:0 auto;width:100%;}
+  .hub-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:128px;height:128px;border-radius:24px;background:var(--gradient-orange);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;z-index:5;box-shadow:0 12px 40px rgba(255,81,0,0.35);}
+  .hub-core i{font-size:34px;margin-bottom:4px;}
+  .hub-core span{font-size:13px;font-weight:800;letter-spacing:0.02em;}
+  .orbit{position:absolute;width:54px;height:54px;border-radius:14px;background:var(--white);border:2px solid rgba(18,45,110,0.1);display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--primary);box-shadow:0 6px 18px rgba(18,45,110,0.1);z-index:4;}
+  .synergy-list{list-style:none;}
+  .synergy-list li{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
+  .synergy-list .num{flex-shrink:0;width:30px;height:30px;border-radius:9px;background:var(--gradient-blue);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;}
+  .synergy-list h4{font-size:17px;font-weight:800;margin-bottom:3px;}
+  .synergy-list p{font-size:15px;color:rgba(18,45,110,0.7);line-height:1.45;}
+
+  /* ---------- AGENT GROUPS ---------- */
+  .group{margin-bottom:52px;}
+  .group-head{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+  .group-head .gic{width:46px;height:46px;border-radius:12px;background:var(--gradient-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0;}
+  .group-head h3{font-size:22px;font-weight:800;letter-spacing:-0.01em;}
+  .group-head p{font-size:14px;color:rgba(18,45,110,0.6);font-weight:600;}
+  .agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;}
+  .agent-card{background:var(--white);border:1.5px solid rgba(18,45,110,0.08);border-radius:16px;padding:24px;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;}
+  .agent-card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(18,45,110,0.12);border-color:rgba(255,81,0,0.4);}
+  .agent-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .agent-ic{width:44px;height:44px;border-radius:11px;background:var(--surface);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+  .agent-name{font-size:17px;font-weight:800;line-height:1.1;}
+  .agent-role{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.03em;}
+  .agent-card p{font-size:14px;color:rgba(18,45,110,0.72);line-height:1.5;}
+
+  /* ---------- DEMO SCRIPT STRIP ---------- */
+  .script{background:var(--gradient-blue);color:#fff;border-radius:22px;padding:48px;position:relative;overflow:hidden;}
+  .script .blob{position:absolute;width:280px;height:280px;border-radius:50%;background:var(--gradient-orange);opacity:0.3;top:-120px;right:-80px;filter:blur(8px);}
+  .script-inner{position:relative;z-index:2;}
+  .script h2{color:#fff;}
+  .script-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin-top:30px;}
+  .sstep{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:14px;padding:22px;}
+  .sstep .sn{font-size:13px;font-weight:800;color:#ffb38f;margin-bottom:8px;letter-spacing:0.04em;}
+  .sstep h4{font-size:16px;font-weight:800;margin-bottom:6px;}
+  .sstep p{font-size:14px;color:rgba(255,255,255,0.8);line-height:1.45;}
+
+  /* ---------- CTA ---------- */
+  .cta-banner{background:var(--white);border:2px solid rgba(18,45,110,0.1);border-radius:22px;padding:44px;text-align:center;box-shadow:0 8px 40px rgba(18,45,110,0.08);}
+  .cta-banner h2{margin-bottom:12px;}
+  .cta-banner p{font-size:17px;color:rgba(18,45,110,0.7);max-width:520px;margin:0 auto 26px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:#FF5100;color:#FFFFFF;border:none;border-radius:10px;padding:14px 26px;font-family:'Manrope',sans-serif;font-weight:700;font-size:16px;cursor:pointer;text-decoration:none;transition:transform .15s;}
+  .btn:hover{transform:translateY(-2px);}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--surface);padding:40px 0;}
+  .footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;}
+  .footer-inner .contact{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;font-weight:600;color:var(--primary);}
+  .footer-inner .contact a{color:var(--primary);text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+  .footer-inner .contact i{color:var(--accent);}
+
+  .fade{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+  .fade.in{opacity:1;transform:none;}
+
+  /* ---------- PAIN SELECTOR ---------- */
+  .pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:6px;}
+  .pain-btn{position:relative;background:var(--white);border:2px solid rgba(18,45,110,0.12);border-radius:14px;padding:22px 20px;text-align:left;cursor:pointer;font-family:'Manrope',sans-serif;transition:transform .15s,border-color .15s,box-shadow .15s;display:flex;flex-direction:column;gap:8px;}
+  .pain-btn:hover{transform:translateY(-3px);border-color:rgba(255,81,0,0.5);box-shadow:0 10px 28px rgba(18,45,110,0.1);}
+  .pain-btn.active{border-color:var(--accent);box-shadow:0 10px 30px rgba(255,81,0,0.18);}
+  .pain-btn .pi{width:46px;height:46px;border-radius:12px;background:var(--surface);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:23px;}
+  .pain-btn .pi .lucide{font-size:23px;}
+  .pain-btn.active .pi{background:var(--gradient-orange);color:#fff;}
+  .pain-btn .pq{font-size:15px;font-weight:700;color:var(--primary);line-height:1.3;}
+  .pain-btn .ps{font-size:13px;color:rgba(18,45,110,0.6);font-weight:500;}
+  /* rank badge */
+  .pain-btn .rank-badge{position:absolute;top:-10px;right:-10px;width:30px;height:30px;border-radius:50%;background:var(--gradient-orange);color:#fff;font-size:14px;font-weight:800;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(255,81,0,0.35);border:2px solid var(--white);z-index:2;}
+  .pain-btn.active .rank-badge{display:flex;animation:popIn .25s ease;}
+  @keyframes popIn{from{transform:scale(0);}to{transform:scale(1);}}
+
+  /* prio results accordion */
+  .prio-results{margin-top:28px;display:flex;flex-direction:column;gap:18px;}
+  .pain-result{background:var(--white);border:1.5px solid rgba(18,45,110,0.1);border-radius:20px;overflow:hidden;box-shadow:0 8px 40px rgba(18,45,110,0.08);animation:slideIn .35s ease;}
+  @keyframes slideIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+  .pr-head{background:var(--gradient-blue);color:#fff;padding:22px 28px;display:flex;align-items:center;gap:16px;}
+  .pr-head .pr-rank{flex-shrink:0;width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,0.15);color:#ffb38f;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .pr-head .pr-eyebrow{font-size:12px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#ffb38f;margin-bottom:3px;}
+  .pr-head h3{font-size:20px;font-weight:800;line-height:1.2;}
+  .pr-body{padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:30px;}
+  @media(max-width:760px){.pr-body{grid-template-columns:1fr;gap:24px;}}
+  .pr-col h4{font-size:13px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .pr-col h4 .lucide{font-size:17px;}
+  .pr-agent{display:flex;gap:13px;align-items:flex-start;margin-bottom:16px;padding:16px;background:var(--surface);border-radius:13px;}
+  .pr-agent .ai{width:42px;height:42px;border-radius:11px;background:var(--gradient-blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;}
+  .pr-agent .ai .lucide{font-size:21px;}
+  .pr-agent .an{font-size:15px;font-weight:800;}
+  .pr-agent .ar{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.02em;margin-bottom:4px;}
+  .pr-agent .ad{font-size:13px;color:rgba(18,45,110,0.72);line-height:1.45;}
+  .pr-script{list-style:none;}
+  .pr-script li{font-size:14px;color:var(--primary);line-height:1.5;padding:11px 0 11px 26px;position:relative;border-bottom:1px solid rgba(18,45,110,0.07);}
+  .pr-script li:last-child{border-bottom:none;}
+  .pr-script li::before{content:"\201C";position:absolute;left:0;top:8px;font-size:22px;font-weight:800;color:var(--accent);line-height:1;}
+  .pr-script li.q::before{content:"?";font-size:15px;top:12px;background:var(--accent);color:#fff;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .pr-deepen{margin-top:6px;padding:16px;background:rgba(255,81,0,0.06);border-radius:12px;}
+  .pr-deepen .dt{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:var(--accent);margin-bottom:8px;}
+  .pr-deepen span{display:block;font-size:14px;color:var(--primary);font-weight:600;padding:4px 0;}
+  .pain-foot{margin-top:24px;background:var(--surface);border-radius:14px;padding:18px 22px;font-size:14px;color:rgba(18,45,110,0.7);font-weight:600;display:flex;align-items:center;gap:10px;}
+  .pain-foot .lucide-slot .lucide{font-size:19px;color:var(--accent);}
+  .pain-hint{text-align:center;font-size:15px;color:rgba(18,45,110,0.55);font-weight:600;margin-top:24px;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .pain-hint .lucide-slot .lucide{font-size:18px;}
+
+  /* ---------- WAS IST DER HUB ---------- */
+  .whatis-grid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center;}
+  @media(max-width:980px){.whatis-grid{grid-template-columns:1fr;gap:40px;}}
+  .whatis-text .lead-q{font-size:21px;font-weight:800;color:var(--primary);line-height:1.3;margin-bottom:18px;}
+  .whatis-text p{font-size:16px;color:rgba(18,45,110,0.75);line-height:1.6;margin-bottom:16px;}
+  .whatis-text strong{color:var(--primary);font-weight:800;}
+  .whatis-layers{list-style:none;margin-top:26px;}
+  .whatis-layers li{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px;padding:16px 18px;background:var(--white);border:1.5px solid rgba(18,45,110,0.09);border-radius:13px;}
+  .whatis-layers .li-ic{flex-shrink:0;width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;}
+  .li-ic.a{background:rgba(18,45,110,0.08);color:var(--primary);}
+  .li-ic.b{background:var(--gradient-orange);color:#fff;}
+  .li-ic.c{background:var(--gradient-blue);color:#fff;}
+  .whatis-layers h4{font-size:16px;font-weight:800;margin-bottom:3px;}
+  .whatis-layers p{font-size:14px;color:rgba(18,45,110,0.7);line-height:1.45;margin:0;}
+
+  /* circular hub diagram */
+  .hubviz{position:relative;width:100%;max-width:480px;aspect-ratio:1/1;margin:0 auto;}
+  .hubviz .ring-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:6;width:150px;}
+  .hubviz .core-data{width:150px;height:150px;border-radius:50%;background:var(--gradient-blue);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:0 14px 44px rgba(18,45,110,0.32);}
+  .hubviz .core-data i{font-size:32px;margin-bottom:6px;color:#ffb38f;}
+  .hubviz .core-data .ct{font-size:15px;font-weight:800;line-height:1.15;}
+  .hubviz .core-data .cs{font-size:10px;font-weight:600;color:rgba(255,255,255,0.72);margin-top:4px;line-height:1.3;padding:0 8px;}
+  /* hub software band */
+  .hubviz .hub-band{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64%;height:64%;border-radius:50%;border:2px dashed rgba(255,81,0,0.45);z-index:3;}
+  .hubviz .hub-band-tag{position:absolute;top:18%;left:50%;transform:translate(-50%,-50%);background:var(--gradient-orange);color:#fff;font-size:11px;font-weight:800;letter-spacing:0.03em;padding:5px 13px;border-radius:100px;white-space:nowrap;z-index:7;box-shadow:0 4px 14px rgba(255,81,0,0.3);}
+  .hubviz .agent-dot{position:absolute;width:50px;height:50px;border-radius:13px;background:var(--white);border:1.5px solid rgba(18,45,110,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--primary);box-shadow:0 5px 16px rgba(18,45,110,0.12);z-index:5;transition:transform .15s;}
+  .hubviz .agent-dot:hover{transform:scale(1.12);border-color:var(--accent);color:var(--accent);}
+  .hubviz svg.spokes{position:absolute;inset:0;width:100%;height:100%;z-index:1;}
+  .hubviz .agent-dot .tip{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;color:rgba(18,45,110,0.55);white-space:nowrap;pointer-events:none;}
+  .storyline{margin-top:46px;background:var(--gradient-blue);border-radius:18px;padding:26px 32px;color:#fff;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .storyline .sl-steps{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-weight:700;font-size:15px;}
+  .storyline .sl-steps .old{color:rgba(255,255,255,0.55);text-decoration:line-through;text-decoration-color:rgba(255,179,143,0.6);}
+  .storyline .sl-steps .now{color:#ffb38f;}
+  .storyline .sl-steps i{color:#ffb38f;font-size:18px;}
+  .storyline .sl-text{font-size:14px;color:rgba(255,255,255,0.8);flex:1;min-width:240px;}
+
+  /* lucide inline-svg sizing: inherit color, consistent stroke */
+  .lucide{width:1em;height:1em;display:inline-block;vertical-align:-0.125em;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none;}
+
+  /* ---------- ARCHITEKTUR: DATENBOX + KONZENTRISCHE RINGE ---------- */
+  .archc-wrap{display:flex;flex-direction:column;align-items:center;margin-top:14px;}
+  .archc-stage{display:flex;align-items:center;justify-content:center;gap:0;width:100%;max-width:980px;margin:34px auto 30px;}
+  @media(max-width:860px){.archc-stage{flex-direction:column;gap:0;}}
+
+  /* external customer data box (left) */
+  .data-box{flex-shrink:0;width:250px;background:var(--white);border:2px solid rgba(18,45,110,0.18);border-radius:18px;padding:18px;box-shadow:0 6px 24px rgba(18,45,110,0.08);position:relative;z-index:2;}
+  @media(max-width:860px){.data-box{width:100%;max-width:340px;}}
+  .data-box .db-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:0.02em;text-transform:uppercase;color:var(--primary);background:rgba(18,45,110,0.06);padding:6px 11px;border-radius:100px;margin-bottom:14px;}
+  .data-box .db-tag .lucide{font-size:15px;}
+  .data-box .db-server{border:1.5px dashed rgba(18,45,110,0.28);border-radius:13px;padding:14px;position:relative;}
+  .data-box .db-vm{position:absolute;top:-9px;left:14px;background:var(--white);padding:0 7px;font-size:10px;font-weight:700;color:rgba(18,45,110,0.55);}
+  .data-box .db-data-head{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+  .data-box .db-data-head .lucide{font-size:24px;color:var(--primary);flex-shrink:0;}
+  .data-box .db-data-head b{font-size:15px;font-weight:800;color:var(--primary);}
+  .data-box .db-types{display:grid;grid-template-columns:1fr 1fr;gap:8px 6px;margin-bottom:13px;}
+  .data-box .db-type{display:flex;flex-direction:row;align-items:center;gap:6px;font-size:10.5px;font-weight:600;color:rgba(18,45,110,0.7);line-height:1.05;min-width:0;}
+  .data-box .db-type span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .data-box .db-type .dt-ic{width:24px;height:24px;border-radius:7px;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .data-box .db-type .dt-ic .lucide{font-size:13px;color:var(--accent);}
+  .data-box .db-indexer{display:flex;align-items:center;gap:9px;background:var(--surface);border-radius:10px;padding:9px 11px;}
+  .data-box .db-indexer .lucide{font-size:18px;color:var(--accent);flex-shrink:0;}
+  .data-box .db-indexer span{font-size:12px;font-weight:700;color:var(--primary);}
+  .data-box .db-indexer small{font-size:10.5px;color:rgba(18,45,110,0.6);display:block;font-weight:500;}
+  .data-box .db-note{font-size:11.5px;font-weight:600;color:rgba(18,45,110,0.62);margin:12px 0 0;display:flex;align-items:center;gap:6px;}
+  .data-box .db-note .lucide{font-size:14px;color:var(--accent);flex-shrink:0;}
+
+  /* connector between box and circle = the interface */
+  .archc-connector{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;width:120px;position:relative;z-index:1;}
+  @media(max-width:860px){.archc-connector{width:auto;padding:14px 0;}}
+  /* connector between box and circle = the interface (subordinate) */
+  .archc-connector{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;width:150px;position:relative;z-index:1;}
+  @media(max-width:860px){.archc-connector{width:auto;padding:30px 0;}}
+  .archc-connector .conn-line{position:relative;width:100%;height:2px;background:repeating-linear-gradient(90deg,rgba(18,45,110,0.3) 0 5px,transparent 5px 10px);}
+  @media(max-width:860px){.archc-connector .conn-line{width:2px;height:46px;background:repeating-linear-gradient(180deg,rgba(18,45,110,0.3) 0 5px,transparent 5px 10px);}}
+  .archc-connector .conn-badge{background:var(--white);border:1px solid rgba(18,45,110,0.18);border-radius:100px;padding:3px 9px 3px 7px;display:flex;align-items:center;gap:5px;font-size:9.5px;font-weight:700;color:rgba(18,45,110,0.62);white-space:nowrap;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;}
+  @media(max-width:860px){.archc-connector .conn-badge{position:static;transform:none;}}
+  .archc-connector .conn-badge .lucide{font-size:12px;color:rgba(18,45,110,0.5);}
+  .archc-connector .conn-arrows-top{position:absolute;top:-30px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:600;color:rgba(18,45,110,0.5);white-space:nowrap;}
+  .archc-connector .conn-arrows-bot{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:600;color:rgba(18,45,110,0.5);white-space:nowrap;}
+  @media(max-width:860px){.archc-connector .conn-arrows-top{position:static;transform:none;margin-bottom:8px;}.archc-connector .conn-arrows-bot{position:static;transform:none;margin-top:8px;}}
+
+  .archc{position:relative;width:100%;max-width:540px;aspect-ratio:1/1;flex-shrink:1;}
+  .archc .ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;}
+  .ring-agents{width:100%;height:100%;background:radial-gradient(circle at center, rgba(18,45,110,0.02) 55%, rgba(18,45,110,0.05) 100%);border:1.5px solid rgba(18,45,110,0.12);}
+  .ring-hub{width:68%;height:68%;background:radial-gradient(circle at 50% 38%, rgba(255,123,51,0.30) 0%, rgba(255,81,0,0.18) 55%, rgba(255,81,0,0.10) 100%);border:2px solid rgba(255,81,0,0.55);box-shadow:0 0 0 6px rgba(255,81,0,0.06), inset 0 2px 30px rgba(255,81,0,0.12);}
+  .ring-hub::before{content:"";position:absolute;inset:-7px;border-radius:50%;border:1.5px dashed rgba(255,81,0,0.35);animation:hubspin 34s linear infinite;}
+  @keyframes hubspin{to{transform:rotate(360deg);}}
+  .ring-cap{position:absolute;top:7px;left:50%;transform:translateX(-50%);font-size:10.5px;font-weight:800;letter-spacing:0.03em;text-transform:uppercase;white-space:nowrap;padding:2px 9px;border-radius:100px;}
+  .cap-agents{color:var(--primary);background:var(--white);border:1px solid rgba(18,45,110,0.14);top:30px;}
+  @media(max-width:860px){.cap-agents{top:40px;}}
+  .cap-hub{color:#fff;background:var(--gradient-orange);border:none;top:auto;bottom:7px;font-size:11px;padding:5px 14px;box-shadow:0 4px 14px rgba(255,81,0,0.4);letter-spacing:0.04em;z-index:6;}
+  .archc-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40%;height:40%;border-radius:50%;background:var(--gradient-blue);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;z-index:6;box-shadow:0 12px 40px rgba(18,45,110,0.32);text-align:center;padding:8px;}
+  .archc-core .lucide{font-size:clamp(24px,4.5vw,32px);margin-bottom:5px;color:#ffb38f;}
+  .archc-core span{font-size:clamp(14px,2.6vw,17px);font-weight:800;line-height:1.1;}
+  .archc-core small{font-size:clamp(8px,1.7vw,10.5px);font-weight:600;color:rgba(255,255,255,0.72);margin-top:3px;line-height:1.3;}
+  .archc-zone-tag{position:absolute;left:50%;top:-13px;transform:translateX(-50%);z-index:7;background:var(--gradient-orange);color:#fff;font-size:11px;font-weight:800;letter-spacing:0.02em;padding:5px 13px;border-radius:100px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;box-shadow:0 4px 14px rgba(255,81,0,0.3);}
+  .archc-zone-tag .lucide{font-size:15px;}
+  /* agent dots on the outer ring */
+  .archc .ac-dot{position:absolute;width:clamp(34px,6vw,42px);height:clamp(34px,6vw,42px);border-radius:11px;background:var(--white);border:1.5px solid rgba(18,45,110,0.12);display:flex;align-items:center;justify-content:center;color:var(--primary);box-shadow:0 4px 12px rgba(18,45,110,0.12);z-index:5;transition:transform .15s;}
+  .archc .ac-dot .lucide{font-size:clamp(16px,3vw,20px);}
+  .archc .ac-dot:hover{transform:scale(1.12);border-color:var(--accent);color:var(--accent);}
+  .archc .ac-dot .ac-name{position:absolute;top:calc(100% + 2px);left:50%;transform:translateX(-50%);font-size:8.5px;font-weight:700;color:rgba(18,45,110,0.62);white-space:nowrap;pointer-events:none;letter-spacing:0.01em;}
+  @media(max-width:560px){.archc .ac-dot .ac-name{display:none;}}
+
+  /* legend */
+  .archc-legend{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:860px;width:100%;margin-top:38px;}
+  @media(max-width:760px){.archc-legend{grid-template-columns:1fr;}}
+  .zone-item{display:flex;gap:14px;align-items:stretch;background:var(--white);border:1.5px solid rgba(18,45,110,0.1);border-radius:14px;padding:20px;}
+  .zone-item .zi-bar{flex-shrink:0;width:5px;border-radius:100px;background:var(--primary);}
+  .zone-item .zi-bar.us{background:var(--accent);}
+  .zone-item h4{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;margin-bottom:7px;}
+  .zone-item h4 .lucide{font-size:18px;color:var(--primary);}
+  .zone-us2 h4 .lucide{color:var(--accent);}
+  .zone-item p{font-size:13.5px;color:rgba(18,45,110,0.72);line-height:1.5;margin:0;}
+
+  /* ---------- AGENTEN-FEATURE-ZEILEN (alternierend) ---------- */
+  .agent-rows{display:flex;flex-direction:column;gap:20px;}
+  .agent-row{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;background:var(--white);border:1.5px solid rgba(18,45,110,0.09);border-radius:20px;padding:30px;box-shadow:0 4px 24px rgba(18,45,110,0.05);}
+  .agent-row.reverse .ar-illu{order:2;}
+  .agent-row.reverse .ar-text{order:1;}
+  @media(max-width:760px){.agent-row{grid-template-columns:1fr;gap:22px;padding:24px;}.agent-row.reverse .ar-illu{order:1;}.agent-row.reverse .ar-text{order:2;}}
+  .ar-illu{width:100%;aspect-ratio:3/2;background:var(--surface);border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+  .ar-illu svg{width:100%;height:100%;display:block;}
+  .ar-text .ar-name{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;color:var(--primary);margin-bottom:4px;}
+  .ar-text .ar-role{font-size:12px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .ar-text .ar-desc{font-size:15px;color:rgba(18,45,110,0.74);line-height:1.55;}
+  .ar-text .ar-chip{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12.5px;font-weight:700;color:var(--primary);background:var(--surface);padding:7px 13px;border-radius:100px;}
+  .ar-text .ar-chip .lucide{font-size:15px;color:var(--accent);}
+  .agent-more-wrap{text-align:center;margin-top:26px;}
+  .agent-more-btn{display:inline-flex;align-items:center;gap:9px;background:var(--white);border:1.5px solid rgba(18,45,110,0.16);color:var(--primary);border-radius:100px;padding:13px 24px;font-family:'Manrope',sans-serif;font-weight:800;font-size:15px;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s;}
+  .agent-more-btn:hover{transform:translateY(-2px);border-color:rgba(255,81,0,0.45);box-shadow:0 8px 22px rgba(18,45,110,0.1);}
+  .agent-more-btn .lucide{font-size:18px;color:var(--accent);transition:transform .25s;}
+  .agent-more-btn.open .lucide{transform:rotate(180deg);}
+  .agent-rows-more{display:none;flex-direction:column;gap:20px;margin-top:20px;}
+  .agent-rows-more.show{display:flex;}
+
+  .demo-logic{margin-top:30px;background:var(--surface);border-radius:16px;padding:24px 26px;display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;}
+  .demo-logic .dl-steps{display:flex;gap:0;flex:1;min-width:280px;flex-wrap:wrap;}
+  .demo-logic .dl-step{flex:1;min-width:160px;position:relative;padding:0 18px;}
+  .demo-logic .dl-step:not(:last-child)::after{content:"";position:absolute;right:0;top:6px;bottom:6px;width:1px;background:rgba(18,45,110,0.12);}
+  .demo-logic .dl-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:7px;background:var(--gradient-orange);color:#fff;font-size:12px;font-weight:800;margin-bottom:8px;}
+  .demo-logic .dl-step h5{font-size:14px;font-weight:800;margin-bottom:4px;}
+  .demo-logic .dl-step p{font-size:13px;color:rgba(18,45,110,0.68);line-height:1.4;margin:0;}
+  .demo-logic .dl-lead{font-size:12px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent);width:100%;margin-bottom:4px;}
+
+  /* 3 layers */
+  .layers-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:840px){.layers-3{grid-template-columns:1fr;}}
+  .layer-card{background:var(--white);border:1.5px solid rgba(18,45,110,0.1);border-radius:16px;padding:26px;}
+  .layer-card .li-ic{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px;}
+  .layer-card h4{font-size:17px;font-weight:800;margin-bottom:8px;}
+  .layer-card p{font-size:14px;color:rgba(18,45,110,0.72);line-height:1.5;}
+  .li-ic.a{background:rgba(18,45,110,0.08);color:var(--primary);}
+  .li-ic.b{background:var(--gradient-orange);color:#fff;}
+  .li-ic.c{background:var(--gradient-blue);color:#fff;}
+
+  /* why 3 */
+  .why-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:840px){.why-3{grid-template-columns:1fr;}}
+  .why-card{background:var(--surface);border-radius:16px;padding:26px;}
+  .why-ic{width:46px;height:46px;border-radius:12px;background:var(--white);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:16px;box-shadow:0 4px 14px rgba(18,45,110,0.07);}
+  .why-card h4{font-size:17px;font-weight:800;margin-bottom:8px;}
+  .why-card p{font-size:14px;color:rgba(18,45,110,0.72);line-height:1.5;}
+
+  .arch-caption{text-align:center;font-size:15px;color:rgba(18,45,110,0.62);font-weight:600;max-width:760px;margin:24px auto 0;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-badge">
+      <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 1L1 10.5H7L5.5 17L13 7.5H7L8.5 1Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span class="logo-text">braingineering<span style="color:#122D6E;">.</span></span>
+  </div>
+  <div class="nav-step">
+    <a href="#wasist">Was ist das?</a><span>›</span>
+    <a href="#prinzip">Ablauf</a><span>›</span>
+    <a href="#synergie">Zusammenspiel</a><span>›</span>
+    <a href="#schmerz">Wo tut's weh?</a><span>›</span>
+    <a href="#agenten">Werkzeuge</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="wrap hero-inner">
+    <span class="eyebrow"><i class="ri-flashlight-line"></i> Engineering AI Hub</span>
+    <h1>Engineering AI Hub<br><span class="hl">Verlässliche KI für Ingenieurbüros</span> in Österreich</h1>
+    <p class="lead">Eine Software, die wir für Sie betreiben. Sie arbeitet auf Ihren eigenen Firmendaten und bündelt 13 Werkzeuge für die täglichen Aufgaben im Büro.</p>
+    <div class="hero-meta">
+      <div><i class="ri-server-line"></i> Software bei uns gehostet (EU)</div>
+      <div><i class="ri-database-2-line"></i> Daten bleiben bei Ihnen</div>
+      <div><i class="ri-shield-check-line"></i> DSGVO-konform</div>
+    </div>
+  </div>
+</header>
+
+<!-- 0. WAS IST DER HUB — zusammengeführt -->
+<section id="wasist">
+  <div class="wrap">
+    <div class="section-head center fade">
+      <div class="kicker">Zuerst das Grundprinzip</div>
+      <h2>Was ist der Engineering AI Hub?</h2>
+      <p>Eine Software, die wir für Sie betreiben. Ihre Daten bleiben bei Ihnen im Haus. Wir fragen sie nur über eine enge Schnittstelle an, wenn ein Werkzeug etwas davon braucht.</p>
+    </div>
+
+    <!-- ARCHITEKTUR: Datenbox + konzentrische Ringe -->
+    <div class="archc-wrap fade">
+      <div class="archc-stage">
+
+        <!-- externe Datenbox (links, beim Kunden) -->
+        <div class="data-box">
+          <span class="db-tag"><svg class="lucide" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg> Bei Ihnen</span>
+          <div class="db-server">
+            <span class="db-vm">Server / Cloud</span>
+            <div class="db-data-head">
+              <svg class="lucide" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+              <b>Ihre Daten</b>
+            </div>
+            <div class="db-types">
+              <span class="db-type" data-ic="folder"><span class="dt-ic"></span>Projekte</span>
+              <span class="db-type" data-ic="book"><span class="dt-ic"></span>Normen</span>
+              <span class="db-type" data-ic="draft"><span class="dt-ic"></span>Angebote</span>
+              <span class="db-type" data-ic="filelist"><span class="dt-ic"></span>LVs</span>
+              <span class="db-type" data-ic="radar"><span class="dt-ic"></span>Ausschreib.</span>
+              <span class="db-type" data-ic="shield"><span class="dt-ic"></span>Verträge</span>
+              <span class="db-type" data-ic="mail"><span class="dt-ic"></span>E-Mails</span>
+              <span class="db-type" data-ic="ruler"><span class="dt-ic"></span>Pläne</span>
+            </div>
+            <div class="db-indexer">
+              <svg class="lucide" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <span>Indexer<small>läuft auf Ihrer VM</small></span>
+            </div>
+          </div>
+          <p class="db-note"><svg class="lucide" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Verlässt Ihr Haus nie.</p>
+        </div>
+
+        <!-- Verbindung = Schnittstelle -->
+        <div class="archc-connector">
+          <div class="conn-arrows-top">←&nbsp;Anfrage</div>
+          <div class="conn-line"></div>
+          <div class="conn-badge"><svg class="lucide" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Schnittstelle</div>
+          <div class="conn-arrows-bot">nur nötige Daten&nbsp;→</div>
+        </div>
+
+        <!-- Kreis (bei uns) -->
+        <div class="archc" id="archc">
+          <div class="archc-zone-tag zone-us"><svg class="lucide" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Bei Braingineering · EU-Server</div>
+          <!-- ring 2: agents (outer) -->
+          <div class="ring ring-agents"></div>
+          <!-- ring 1: software/hub -->
+          <div class="ring ring-hub"><span class="ring-cap cap-hub">Hub</span></div>
+          <!-- core: data (verbunden mit der externen Box) -->
+          <div class="archc-core">
+            <svg class="lucide" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+            <span>Ihre Daten</span>
+            <small>angefragt, nicht<br>gespeichert</small>
+          </div>
+          <!-- agent dots injected via JS onto outer ring -->
+        </div>
+      </div>
+
+      <!-- legend: two zones -->
+      <div class="archc-legend">
+        <div class="zone-item zone-yours">
+          <div class="zi-bar"></div>
+          <div>
+            <h4><svg class="lucide" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg> Bei Ihnen, Haus oder Cloud</h4>
+            <p>Ihre Daten und der Indexer liegen auf einer virtuellen Maschine auf Ihrem Server oder in Ihrer Cloud. Kurze Wege, schnelle Verbindung. Beides verlässt Ihr Haus nie.</p>
+          </div>
+        </div>
+        <div class="zone-item zone-us2">
+          <div class="zi-bar us"></div>
+          <div>
+            <h4><svg class="lucide" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Bei uns, der Hub mit 13 Werkzeugen</h4>
+            <p>Die Software läuft bei uns auf EU-Servern. Ein Werkzeug schickt eine Anfrage über die Schnittstelle an den Indexer und bekommt nur die Daten zurück, die zur Antwort nötig sind. Das ist die Leistung, für die Sie die Lizenz zahlen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODELLE & EU-SOUVERÄNITÄT -->
+    <div class="section-head center fade" style="margin-top:72px;margin-bottom:24px;">
+      <div class="kicker">Was läuft unter der Haube?</div>
+      <h2>Das passende Modell je Aufgabe. Betrieben in Europa.</h2>
+      <p>Sie müssen sich um die Technik nicht kümmern. Wir wählen für jede Aufgabe das geeignete Sprachmodell und betreiben alles auf europäischen Servern.</p>
+    </div>
+    <div class="models-grid fade">
+
+      <div class="model-card">
+        <div class="mc-logos">
+          <div class="ml"><svg viewBox="0 0 24 24" fill="none" stroke="#122D6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg></div>
+          <div class="ml"><svg viewBox="0 0 24 24" fill="none" stroke="#122D6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5L9 20"/></svg></div>
+          <div class="ml lead"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 7l7 4 7-4"/><path d="M5 12l7 4 7-4"/><path d="M5 17l7 4 7-4"/></svg></div>
+        </div>
+        <h3>Jeder Agent nutzt das Modell, das zur Aufgabe passt</h3>
+        <p>Für Text und Logik ein starkes Sprachmodell, für Visualisierungen ein eigenes Bildmodell. Der Hub wählt je Aufgabe das Werkzeug, das das beste Ergebnis liefert.</p>
+        <p>Anders als ein einzelner Chatbot kombiniert der Hub mehrere Modelle. Für Sie bleibt es eine Oberfläche, die Auswahl im Hintergrund übernehmen wir.</p>
+        <span class="mc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5100" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Bestes Modell je Aufgabe</span>
+      </div>
+
+      <div class="model-card eu">
+        <div class="mc-flag"><svg viewBox="0 0 24 24" fill="none" stroke="#ffcf3f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="3.2" r=".9" fill="#ffcf3f"/><circle cx="16.4" cy="4.4" r=".9" fill="#ffcf3f"/><circle cx="19.6" cy="7.6" r=".9" fill="#ffcf3f"/><circle cx="20.8" cy="12" r=".9" fill="#ffcf3f"/><circle cx="19.6" cy="16.4" r=".9" fill="#ffcf3f"/><circle cx="16.4" cy="19.6" r=".9" fill="#ffcf3f"/><circle cx="12" cy="20.8" r=".9" fill="#ffcf3f"/><circle cx="7.6" cy="19.6" r=".9" fill="#ffcf3f"/><circle cx="4.4" cy="16.4" r=".9" fill="#ffcf3f"/><circle cx="3.2" cy="12" r=".9" fill="#ffcf3f"/><circle cx="4.4" cy="7.6" r=".9" fill="#ffcf3f"/><circle cx="7.6" cy="4.4" r=".9" fill="#ffcf3f"/></svg></div>
+        <h3>Betrieben in Europa, mit Kurs auf volle Souveränität</h3>
+        <p>Alle Systeme laufen in zertifizierten europäischen Rechenzentren. Ihre Daten bleiben innerhalb der EU.</p>
+        <span class="mc-now"><svg viewBox="0 0 24 24" fill="none" stroke="#ffb38f" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Heute: Azure AI Foundry, voll DSGVO-konform</span>
+        <div class="mc-roadmap"><b>Wohin wir gehen:</b> Wir verlagern den Betrieb schrittweise auf Mistral, ein französisches Modell, das rein in Frankreich läuft. Damit kommt die gesamte Verarbeitung unter europäische Hoheit, ohne Umweg über US-Anbieter.</div>
+      </div>
+
+    </div>
+
+    <!-- AGENTEN-ÜBERBLICK: Feature-Zeilen -->
+    <div class="section-head center fade" style="margin-top:72px;margin-bottom:28px;">
+      <div class="kicker">Was steckt im Hub?</div>
+      <h2>Aus den täglichen Aufgaben eines Ingenieurbüros entstanden.</h2>
+      <p>Jeder Agent übernimmt eine wiederkehrende Aufgabe. Ein paar im Detail, den Rest können Sie aufklappen.</p>
+    </div>
+    <div class="agent-rows fade" id="agentRows"></div>
+    <div class="agent-rows-more" id="agentRowsMore"></div>
+    <div class="agent-more-wrap fade">
+      <button class="agent-more-btn" id="agentMoreBtn"><span id="agentMoreLabel">Weitere 9 Agenten anzeigen</span> <svg class="lucide" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+    </div>
+
+    <!-- DREI EBENEN -->
+    <div class="section-head center fade" style="margin-top:72px;margin-bottom:32px;">
+      <div class="kicker">Die drei Ebenen</div>
+      <h2>Daten, Hub, Werkzeuge. Eine davon zahlen Sie als Lizenz.</h2>
+    </div>
+    <div class="layers-3 fade">
+      <div class="layer-card">
+        <div class="li-ic a"><svg class="lucide" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
+        <h4>Die Grundlage: Ihre Daten</h4>
+        <p>Ihre Projekte, Normen, Verträge und E-Mails. Sie bleiben bei Ihnen im Haus und sind die gemeinsame Basis für alle Werkzeuge.</p>
+      </div>
+      <div class="layer-card">
+        <div class="li-ic b"><svg class="lucide" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2"/><path d="M15 2v2"/><path d="M9 20v2"/><path d="M15 20v2"/><path d="M20 9h2"/><path d="M20 14h2"/><path d="M2 9h2"/><path d="M2 14h2"/></svg></div>
+        <h4>Der Hub: macht die Arbeit</h4>
+        <p>Die Software, die Ihre Daten auswertet und die Anfragen beantwortet. Von uns betrieben und gewartet. Das ist die Leistung, für die Sie die Lizenz bezahlen.</p>
+      </div>
+      <div class="layer-card">
+        <div class="li-ic c"><svg class="lucide" viewBox="0 0 24 24"><path d="M14 7h7v7"/><path d="M21 7 9 19l-5-5"/><circle cx="4" cy="20" r="0"/></svg></div>
+        <h4>Die 13 Werkzeuge: täglich im Einsatz</h4>
+        <p>Jedes erledigt eine konkrete Aufgabe: Normen nachschlagen, Projekte finden, Angebote erstellen. Alle greifen auf dieselbe Datenbasis zu.</p>
+      </div>
+    </div>
+
+    <!-- WARUM EIN SYSTEM -->
+    <div class="section-head center fade" style="margin-top:64px;margin-bottom:32px;">
+      <div class="kicker">Warum ein System statt 13 Einzeltools</div>
+      <h2>Je mehr Werkzeuge zusammenkommen, desto mehr greift ineinander.</h2>
+    </div>
+    <div class="why-3 fade">
+      <div class="why-card">
+        <div class="why-ic"><svg class="lucide" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
+        <h4>Eine Datenbasis für alle</h4>
+        <p>Jedes Werkzeug sieht dieselben Projekte, Normen und Verträge. Sie pflegen die Daten einmal, nicht an mehreren Stellen.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-ic"><svg class="lucide" viewBox="0 0 24 24"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg></div>
+        <h4>Die Werkzeuge übergeben aneinander</h4>
+        <p>Bietmar bewertet eine Ausschreibung, übergibt an Angebjörn, der das Angebot erstellt. Ein durchgehender Ablauf statt getrennter Schritte.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-ic"><svg class="lucide" viewBox="0 0 24 24"><path d="M7 20V10"/><path d="M12 20V4"/><path d="M17 20v-6"/></svg></div>
+        <h4>Sie fangen klein an</h4>
+        <p>Der Start sind drei Werkzeuge, die sich rasch einrichten lassen. Weitere kommen dazu, wenn Sie sehen, dass es funktioniert.</p>
+      </div>
+    </div>
+
+    <!-- SICHERHEITS-STREIFEN -->
+    <div class="secure-strip fade" style="margin-top:56px;">
+      <div class="lock"><svg class="lucide" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      <div style="flex:1;min-width:280px;">
+        <h4>Der entscheidende Punkt: Ihre Daten verlassen Ihr Haus nicht.</h4>
+        <p>Ihre Daten und der Indexer liegen auf einer virtuellen Maschine bei Ihnen. Bei uns läuft nur die Software des Hubs, auf europäischen Servern in Deutschland. Wir trainieren keine KI mit Ihren Daten, und kein Dritter bekommt Zugriff.</p>
+        <div class="secure-tags">
+          <span><svg class="lucide" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 1-1h14l-3 5 3 5H5"/></svg> EU-Hosting (DE)</span>
+          <span><svg class="lucide" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><circle cx="12" cy="11" r="1"/><path d="M12 12v2"/></svg> DSGVO-konform</span>
+          <span><svg class="lucide" viewBox="0 0 24 24"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.5 13.5 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><path d="m2 2 20 20"/></svg> Kein Daten-Training</span>
+          <span><svg class="lucide" viewBox="0 0 24 24"><line x1="22" y1="12" x2="2" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" y1="16" x2="6.01" y2="16"/><line x1="10" y1="16" x2="10.01" y2="16"/></svg> Daten bleiben bei Ihnen</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STORYLINE -->
+    <div class="storyline fade">
+      <div class="sl-steps">
+        <span class="old">Chatbots</span>
+        <svg class="lucide" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <span class="old">Agenten</span>
+        <svg class="lucide" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <span class="now">eigene Software-Werkzeuge</span>
+      </div>
+      <div class="sl-text">Begonnen hat es mit einfachen Chatbots, dann kamen Agenten. Heute ist daraus eine eigenständige Software geworden. Alle Werkzeuge sitzen unter einem Dach und teilen sich dieselbe Datenbasis.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WO TUT'S WEH — PRIORISIERUNG -->
+<section id="schmerz" class="light">
+  <div class="wrap">
+    <div class="section-head center fade">
+      <div class="kicker">Jetzt sind Sie dran</div>
+      <h2>Wo geht bei Ihnen am meisten Zeit verloren?</h2>
+      <p>Tippen Sie Ihre wichtigsten Themen an, in der Reihenfolge, wie sehr sie drücken. Der erste Klick wird Priorität 1, der zweite Priorität 2, und so weiter. Drei Themen sind ein guter Richtwert. Darunter sehen Sie, welche Werkzeuge wir uns in der Demo dazu anschauen.</p>
+    </div>
+
+    <div class="pain-grid fade" id="painGrid">
+      <button class="pain-btn" data-pain="archiv">
+        <span class="rank-badge"></span>
+        <div class="pi" data-ic="folder"></div>
+        <span class="pq">Alte Projekte wiederfinden</span>
+        <span class="ps">„Haben wir sowas nicht schon mal gebaut?"</span>
+      </button>
+      <button class="pain-btn" data-pain="normen">
+        <span class="rank-badge"></span>
+        <div class="pi" data-ic="book"></div>
+        <span class="pq">Normen &amp; Vorschriften</span>
+        <span class="ps">ÖNORM, OIB. Das Raussuchen kostet Zeit.</span>
+      </button>
+      <button class="pain-btn" data-pain="vertraege">
+        <span class="rank-badge"></span>
+        <div class="pi" data-ic="shield"></div>
+        <span class="pq">Verträge &amp; Vertragsbedingungen</span>
+        <span class="ps">Was ist nachteilig für den Auftragnehmer?</span>
+      </button>
+      <button class="pain-btn" data-pain="ausschreibung">
+        <span class="rank-badge"></span>
+        <div class="pi" data-ic="filelist"></div>
+        <span class="pq">Ausschreibungen &amp; LV</span>
+        <span class="ps">Lohnt sich das? Stimmt das LV?</span>
+      </button>
+      <button class="pain-btn" data-pain="angebot">
+        <span class="rank-badge"></span>
+        <div class="pi" data-ic="draft"></div>
+        <span class="pq">Angebote erstellen</span>
+        <span class="ps">Aus Anfrage → fertiges Angebot</span>
+      </button>
+      <button class="pain-btn" data-pain="email">
+        <span class="rank-badge"></span>
+        <div class="pi" data-ic="mail"></div>
+        <span class="pq">E-Mails wiederfinden</span>
+        <span class="ps">„Wer hat das vor 8 Monaten geschrieben?"</span>
+      </button>
+      <button class="pain-btn" data-pain="protokoll">
+        <span class="rank-badge"></span>
+        <div class="pi" data-ic="mic"></div>
+        <span class="pq">Protokolle &amp; Berichte</span>
+        <span class="ps">Baustelle, Begehung, Gutachten</span>
+      </button>
+      <button class="pain-btn" data-pain="marketing">
+        <span class="rank-badge"></span>
+        <div class="pi" data-ic="megaphone"></div>
+        <span class="pq">Referenzen &amp; Außenwirkung</span>
+        <span class="ps">Projekt fertig → LinkedIn &amp; Website</span>
+      </button>
+    </div>
+
+    <div class="pain-hint" id="painHint"><span class="lucide-slot" data-ic="arrowup"></span> Tippen Sie oben Ihre Top-Themen an. Ihre Auswahl klappt hier auf.</div>
+
+    <div class="prio-results" id="prioResults"></div>
+
+    <div class="pain-foot fade" id="painFoot" style="display:none;">
+      <span class="lucide-slot" data-ic="info"></span> In der Demo gehen wir diese Themen der Reihe nach durch. Der Rest bleibt im Hinterkopf: was es sonst noch gibt.
+    </div>
+  </div>
+</section>
+
+<!-- 4. AGENTEN -->
+<section id="agenten">
+  <div class="wrap">
+    <div class="section-head center fade">
+      <div class="kicker">Die 13 Werkzeuge</div>
+      <h2>13 Werkzeuge, geordnet nach dem, was sie erledigen</h2>
+      <p>Sie müssen sich nicht alle merken. Wir suchen gemeinsam die drei, die bei Ihnen den größten Unterschied machen.</p>
+    </div>
+
+    <!-- Gruppe: Wissen finden -->
+    <div class="group fade">
+      <div class="group-head">
+        <div class="gic"><i class="ri-search-2-line"></i></div>
+        <div><h3>Wissen &amp; Informationen finden</h3><p>Was bereits im Haus liegt, auffindbar machen</p></div>
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-book-2-line"></i></div><div><div class="agent-name">Normbert</div><div class="agent-role">Normen-Experte</div></div></div><p>Beantwortet Fragen zu ÖNORMEN, OIB-Richtlinien und Standards und gibt zu jeder Antwort die Fundstelle an, damit Sie sie nachprüfen können.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-folder-search-line"></i></div><div><div class="agent-name">Archibald</div><div class="agent-role">Projektarchivar</div></div></div><p>Durchsucht Ihr Projektarchiv nach Inhalt und findet ähnliche Referenzprojekte, auch wenn Sie nur ungefähr wissen, wonach Sie suchen.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-mail-search-line"></i></div><div><div class="agent-name">Mailanie</div><div class="agent-role">E-Mail-Suche</div></div></div><p>Durchsucht alle Postfächer nach Inhalt und findet die Korrespondenz auch dann, wenn das Stichwort nie im Betreff stand.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-book-open-line"></i></div><div><div class="agent-name">Wiktor</div><div class="agent-role">Firmen-Wiki</div></div></div><p>Kennt interne Abläufe, Prozesse und Qualitätsrichtlinien. Die Antwort auf „Wie machen wir das bei uns nochmal?".</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-team-line"></i></div><div><div class="agent-name">Kennjamin</div><div class="agent-role">Ansprechpartner-Suche</div></div></div><p>Findet die richtige Person im Haus, nach Fachgebiet, Erfahrung und bisheriger Projektbeteiligung.</p></div>
+      </div>
+    </div>
+
+    <!-- Gruppe: Angebote & Ausschreibungen -->
+    <div class="group fade">
+      <div class="group-head">
+        <div class="gic"><i class="ri-file-list-3-line"></i></div>
+        <div><h3>Angebote &amp; Ausschreibungen</h3><p>Von der Ausschreibung bis zum fertigen Angebot</p></div>
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-radar-line"></i></div><div><div class="agent-name">Bietmar</div><div class="agent-role">Ausschreibungs-Prüfung</div></div></div><p>Gleicht Ausschreibungsunterlagen mit Ihrem Firmenprofil ab und gibt eine klare Einschätzung: lohnt sich die Angebotslegung oder nicht.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-file-shield-2-line"></i></div><div><div class="agent-name">Elvira</div><div class="agent-role">LV-Prüfung</div></div></div><p>Prüft Leistungsverzeichnisse auf Vollständigkeit, Schlüssigkeit und typische Fehler und gleicht gegen hinterlegte Preise und Kennwerte ab. Erstellt auch fertige ONLV-Dateien mit Massen und Preisen.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-draft-line"></i></div><div><div class="agent-name">Angebjörn</div><div class="agent-role">Angebots-Erstellung</div></div></div><p>Erstellt Angebote aus Anfragen, Ausschreibungen oder Notizen, abgestimmt auf Ihr Firmenprofil und Ihre Preise. Eigene kalkulierte Positionen können Sie hochladen.</p></div>
+      </div>
+    </div>
+
+    <!-- Gruppe: Vor Ort & Berichte -->
+    <div class="group fade">
+      <div class="group-head">
+        <div class="gic"><i class="ri-mic-2-line"></i></div>
+        <div><h3>Vor Ort, Protokolle &amp; Berichte</h3><p>Diktieren statt abtippen. Der Befund ist strukturiert, bevor Sie im Büro sind.</p></div>
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-phone-line"></i></div><div><div class="agent-name">Protokoliver</div><div class="agent-role">Protokoll per Anruf</div></div></div><p>Protokoll über einen Telefonanruf, von der Baustelle ebenso wie aus einer Besprechung. Er stellt die nötigen Fragen und schickt das fertige Protokoll ans Team.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-file-edit-line"></i></div><div><div class="agent-name">Gutachtrude</div><div class="agent-role">Begehungs-Berichte</div></div></div><p>Begehungsprotokoll direkt vor Ort per Sprache, dazu Fotos und die passenden Normen, als fertiges Word-Dokument, das Sie noch bearbeiten können.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-flask-line"></i></div><div><div class="agent-name">Gefahrgudrun</div><div class="agent-role">Arbeitsstoffverzeichnis</div></div></div><p>Zieht aus einem Stapel Sicherheitsdatenblätter die gesetzlichen Pflichtfelder und legt ein fertiges Arbeitsstoffverzeichnis als Excel an.</p></div>
+      </div>
+    </div>
+
+    <!-- Gruppe: Außenwirkung & Allgemein -->
+    <div class="group fade">
+      <div class="group-head">
+        <div class="gic"><i class="ri-megaphone-line"></i></div>
+        <div><h3>Außenwirkung &amp; Allgemeines</h3><p>Referenzen, Visualisierung und der abgesicherte KI-Chat</p></div>
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-quill-pen-line"></i></div><div><div class="agent-name">Marketingried</div><div class="agent-role">Referenz-Beiträge</div></div></div><p>Macht aus einem abgeschlossenen Referenzprojekt fertige Beiträge für Website, LinkedIn und Instagram, in einem Arbeitsschritt.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-pencil-ruler-2-line"></i></div><div><div class="agent-name">Zeichmund</div><div class="agent-role">Visualisierung</div></div></div><p>Erstellt Renderings und Visualisierungen für Umbauten, für Ausschreibungen und Präsentationen.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-chat-private-line"></i></div><div><div class="agent-name">Chatgar</div><div class="agent-role">Abgesicherter KI-Chat</div></div></div><p>Ein KI-Assistent für allgemeine Fragen, direkt im Browser. Ihre Daten bleiben dabei im Haus.</p></div>
+        <div class="agent-card"><div class="agent-top"><div class="agent-ic"><i class="ri-node-tree"></i></div><div><div class="agent-name">Ragnar</div><div class="agent-role">Steuerung <span style="color:rgba(18,45,110,0.4);">· Beta</span></div></div></div><p>Läuft in MS Teams und verteilt Ihre Anfrage selbst an das passende Werkzeug. Sie schildern nur das Anliegen, die Zuordnung übernimmt Ragnar.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. DEMO-SKRIPT (für Dragan, nicht für Kunden zwingend) -->
+<section id="start" class="light">
+  <div class="wrap">
+    <div class="script fade">
+      <div class="blob"></div>
+      <div class="script-inner">
+        <div class="kicker" style="color:#ffb38f;">Der rote Faden fürs Gespräch</div>
+        <h2>Erst das Bild, dann das Thema, dann das Werkzeug</h2>
+        <p style="color:rgba(255,255,255,0.82);max-width:640px;font-size:17px;margin-top:8px;">Diese Seite vor der Demo zeigen. So ist das Prinzip in zwei Minuten klar, und Sie können gezielt fragen, wo es beim Kunden tatsächlich klemmt.</p>
+        <div class="script-steps">
+          <div class="sstep"><div class="sn">SCHRITT 1</div><h4>Das Prinzip zeigen</h4><p>„Ihre Daten bleiben bei Ihnen. Wir machen sie nur durchsuchbar, darauf arbeiten die Werkzeuge."</p></div>
+          <div class="sstep"><div class="sn">SCHRITT 2</div><h4>Zusammenspiel erklären</h4><p>„Je mehr Werkzeuge, desto mehr greift ineinander. Sie fangen aber mit dreien an, Schritt für Schritt."</p></div>
+          <div class="sstep"><div class="sn">SCHRITT 3</div><h4>Das Thema finden</h4><p>„Welche dieser Aufgaben kostet bei Ihnen am meisten Zeit?" Erst zuhören, dann gezielt zeigen.</p></div>
+          <div class="sstep"><div class="sn">SCHRITT 4</div><h4>Gezielt 1–2 Werkzeuge zeigen</h4><p>Nur das live zeigen, was zum genannten Thema passt. Nicht alle 13.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="cta-banner fade">
+      <h2>Klein anfangen, dort wo es am meisten bringt.</h2>
+      <p>Wir starten mit drei Werkzeugen an den Stellen, die bei Ihnen am meisten Zeit kosten, und bauen Schritt für Schritt aus, wenn Sie sehen, dass es funktioniert.</p>
+      <a class="btn" href="https://www.braingineering.at/kostenloser-ki-kurzcheck-fur-ingenieurburos" target="_blank">Kostenlosen KI-Kurzcheck sichern <i class="ri-arrow-right-line"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap footer-inner">
+    <div class="logo">
+      <div class="logo-badge">
+        <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.5 1L1 10.5H7L5.5 17L13 7.5H7L8.5 1Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">braingineering<span style="color:#122D6E;">.</span></span>
+    </div>
+    <div class="contact">
+      <a href="mailto:office@braingineering.at"><i class="ri-mail-line"></i> office@braingineering.at</a>
+      <a href="tel:+436763930094"><i class="ri-phone-line"></i> +43 676 3930094</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // fade-in on scroll
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12});
+  document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+
+  // ---------- ARCH-HUB: 13 agents orbiting the Hub (right box) ----------
+  // inline lucide paths (innerHTML of a <svg viewBox="0 0 24 24">)
+  const L={
+    book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+    folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><circle cx="12" cy="13" r="2.5"/><path d="m16 17-1.5-1.5"/>',
+    mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+    wiki:'<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
+    users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    radar:'<path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"/><circle cx="12" cy="12" r="2"/><path d="m13.41 10.59 5.66-5.66"/>',
+    shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+    draft:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+    phone:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+    fileedit:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z"/>',
+    flask:'<path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.58 16.5h12.85"/>',
+    pen:'<path d="M15.707 21.293a1 1 0 0 1-1.414 0l-1.586-1.586a1 1 0 0 1 0-1.414l5.586-5.586a1 1 0 0 1 1.414 0l1.586 1.586a1 1 0 0 1 0 1.414z"/><path d="m18 13-1.375-6.874a1 1 0 0 0-.746-.776L3.235 2.028a1 1 0 0 0-1.207 1.207L5.35 15.879a1 1 0 0 0 .776.746L13 18"/><path d="m2.3 2.3 7.286 7.286"/><circle cx="11" cy="11" r="2"/>',
+    ruler:'<path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/>',
+    // additional icons used elsewhere on the page
+    flash:'<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+    server:'<rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01"/><path d="M6 18h.01"/>',
+    database:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/>',
+    shieldcheck:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+    search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+    mic:'<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/>',
+    megaphone:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+    filelist:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+    bookopen:'<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
+    robot:'<rect width="18" height="10" x="3" y="11" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" x2="8" y1="16" y2="16"/><line x1="16" x2="16" y1="16" y2="16"/>',
+    nodetree:'<rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>',
+    chatprivate:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M12 11v.01"/><path d="M8 11v.01"/><path d="M16 11v.01"/>',
+    chat:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+    info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+    arrowright:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+    arrowup:'<path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>'
+  };
+  // map remix-icon classes to lucide keys, then swap any leftover <i class="ri-..."> globally
+  const RI={
+    'ri-flashlight-line':'flash','ri-server-line':'server','ri-database-2-line':'database',
+    'ri-shield-check-line':'shieldcheck','ri-search-2-line':'search','ri-book-2-line':'book',
+    'ri-folder-search-line':'folder','ri-mail-search-line':'mail','ri-book-open-line':'bookopen',
+    'ri-team-line':'users','ri-radar-line':'radar','ri-file-shield-2-line':'shield',
+    'ri-draft-line':'draft','ri-mic-2-line':'mic','ri-phone-line':'phone','ri-file-edit-line':'fileedit',
+    'ri-flask-line':'flask','ri-quill-pen-line':'pen','ri-pencil-ruler-2-line':'ruler',
+    'ri-chat-private-line':'chatprivate','ri-node-tree':'nodetree','ri-megaphone-line':'megaphone',
+    'ri-file-list-3-line':'filelist','ri-robot-2-line':'robot','ri-chat-3-line':'chat',
+    'ri-information-line':'info','ri-mail-line':'mail','ri-arrow-right-line':'arrowright',
+    'ri-arrow-up-line':'arrowup'
+  };
+  document.querySelectorAll('i[class^="ri-"],i[class*=" ri-"]').forEach(el=>{
+    const cls=[...el.classList].find(c=>c.startsWith('ri-'));
+    const key=RI[cls];
+    if(key&&L[key]){
+      const s=document.createElementNS('http://www.w3.org/2000/svg','svg');
+      s.setAttribute('class','lucide');s.setAttribute('viewBox','0 0 24 24');
+      s.innerHTML=L[key];
+      el.replaceWith(s);
+    }
+  });
+
+
+  const HUB_AGENTS=[
+    {p:L.book,name:'Normbert'},{p:L.folder,name:'Archibald'},{p:L.mail,name:'Mailanie'},
+    {p:L.wiki,name:'Wiktor'},{p:L.users,name:'Kennjamin'},{p:L.radar,name:'Bietmar'},
+    {p:L.shield,name:'Elvira'},{p:L.draft,name:'Angebjörn'},{p:L.phone,name:'Protokoliver'},
+    {p:L.fileedit,name:'Gutachtrude'},{p:L.flask,name:'Gefahrgudrun'},{p:L.pen,name:'Marketingried'},
+    {p:L.ruler,name:'Zeichmund'}
+  ];
+  const archc=document.getElementById('archc');
+  if(archc){
+    const R=42; // outer-ring radius in % of the square container
+    const off=(Math.PI*2/HUB_AGENTS.length)/2;
+    HUB_AGENTS.forEach((a,i)=>{
+      const ang=(i/HUB_AGENTS.length)*Math.PI*2 - Math.PI/2 + off;
+      const x=50+R*Math.cos(ang),y=50+R*Math.sin(ang);
+      const d=document.createElement('div');
+      d.className='ac-dot';
+      d.style.left=`calc(${x}% - clamp(17px,3vw,21px))`;
+      d.style.top=`calc(${y}% - clamp(17px,3vw,21px))`;
+      d.title=a.name;
+      d.innerHTML=`<svg class="lucide" viewBox="0 0 24 24">${a.p}</svg><span class="ac-name">${a.name}</span>`;
+      archc.appendChild(d);
+    });
+  }
+
+  // ---------- AGENTEN-FEATURE-ZEILEN mit Illustrationen ----------
+  const C={blue:'#122D6E',blue2:'#2255d4',orange:'#FF5100',orange2:'#ff7b33',surf:'#F0F2F8',white:'#FFFFFF',line:'#cfd6e6',ink:'#122D6E'};
+  const FW=300, FH=200;
+  function illu(inner){return `<svg viewBox="0 0 ${FW} ${FH}" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;}
+
+  const ILLU={
+    // Archibald — project archive: realistic folder tabs with project labels + magnifier
+    archibald:illu(`
+      <rect x="34" y="34" width="232" height="132" rx="10" fill="#fff" stroke="${C.line}"/>
+      <rect x="34" y="34" width="232" height="30" rx="10" fill="${C.surf}"/>
+      <text x="48" y="54" font-family="Manrope,sans-serif" font-size="11" font-weight="800" fill="${C.blue}">Projektarchiv</text>
+      <rect x="150" y="42" width="104" height="16" rx="8" fill="#fff" stroke="${C.line}"/>
+      <circle cx="161" cy="50" r="4.5" fill="none" stroke="${C.orange}" stroke-width="2"/>
+      <line x1="164.5" y1="53.5" x2="168" y2="57" stroke="${C.orange}" stroke-width="2" stroke-linecap="round"/>
+      <text x="173" y="53.5" font-family="Manrope,sans-serif" font-size="7.5" fill="${C.ink}" opacity=".55">"Halle Stahlbau"</text>
+      <g font-family="Manrope,sans-serif">
+        <rect x="48" y="76" width="92" height="34" rx="6" fill="${C.surf}"/>
+        <rect x="54" y="82" width="14" height="14" rx="3" fill="${C.blue}"/>
+        <text x="74" y="89" font-size="8.5" font-weight="700" fill="${C.blue}">Halle Möbelwerk</text>
+        <text x="74" y="100" font-size="7" fill="${C.ink}" opacity=".55">2021 · Stahlbau</text>
+        <rect x="152" y="76" width="92" height="34" rx="6" fill="#fff" stroke="${C.orange}" stroke-width="1.5"/>
+        <rect x="158" y="82" width="14" height="14" rx="3" fill="${C.orange}"/>
+        <text x="178" y="89" font-size="8.5" font-weight="700" fill="${C.blue}">Logistik Süd</text>
+        <text x="178" y="100" font-size="7" fill="${C.ink}" opacity=".55">2019 · Halle</text>
+        <rect x="48" y="120" width="92" height="34" rx="6" fill="${C.surf}"/>
+        <rect x="54" y="126" width="14" height="14" rx="3" fill="${C.blue}"/>
+        <text x="74" y="133" font-size="8.5" font-weight="700" fill="${C.blue}">Gewerbepark B7</text>
+        <text x="74" y="144" font-size="7" fill="${C.ink}" opacity=".55">2022 · Halle</text>
+        <rect x="152" y="120" width="92" height="34" rx="6" fill="${C.surf}"/>
+        <rect x="158" y="126" width="14" height="14" rx="3" fill="${C.blue}"/>
+        <text x="178" y="133" font-size="8.5" font-weight="700" fill="${C.blue}">Produktionshalle</text>
+        <text x="178" y="144" font-size="7" fill="${C.ink}" opacity=".55">2018 · Stahlbau</text>
+      </g>`),
+    // Normbert — realistic ÖNORM page with clause numbering + highlighted paragraph
+    normbert:illu(`
+      <rect x="78" y="24" width="144" height="160" rx="8" fill="#fff" stroke="${C.line}"/>
+      <rect x="78" y="24" width="144" height="34" rx="8" fill="${C.blue}"/>
+      <text x="92" y="40" font-family="Manrope,sans-serif" font-size="11" font-weight="800" fill="#fff">ÖNORM B 1991</text>
+      <text x="92" y="51" font-family="Manrope,sans-serif" font-size="7" fill="#fff" opacity=".75">Einwirkungen auf Tragwerke</text>
+      <g font-family="Manrope,sans-serif" fill="${C.ink}">
+        <text x="92" y="76" font-size="8" font-weight="800">4.2  Lastannahmen</text>
+        <rect x="92" y="82" width="116" height="5" rx="2.5" fill="${C.line}"/>
+        <rect x="92" y="92" width="116" height="5" rx="2.5" fill="${C.line}"/>
+        <rect x="92" y="102" width="80" height="5" rx="2.5" fill="${C.line}"/>
+      </g>
+      <rect x="86" y="116" width="128" height="30" rx="5" fill="${C.orange}" opacity=".1"/>
+      <rect x="86" y="116" width="3.5" height="30" rx="1.75" fill="${C.orange}"/>
+      <text x="96" y="129" font-family="Manrope,sans-serif" font-size="8" font-weight="800" fill="${C.orange}">4.2.3  q_k = 5,0 kN/m²</text>
+      <rect x="96" y="135" width="104" height="5" rx="2.5" fill="${C.orange}" opacity=".5"/>
+      <g font-family="Manrope,sans-serif">
+        <rect x="92" y="156" width="116" height="5" rx="2.5" fill="${C.line}"/>
+        <rect x="92" y="166" width="70" height="5" rx="2.5" fill="${C.line}"/>
+      </g>
+      <circle cx="206" cy="150" r="20" fill="${C.blue}"/>
+      <path d="M198 150l6 6 11-12" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>`),
+    // Mailanie — inbox list with semantic match highlight + magnifier
+    mailanie:illu(`
+      <rect x="40" y="30" width="220" height="140" rx="9" fill="#fff" stroke="${C.line}"/>
+      <rect x="40" y="30" width="220" height="28" rx="9" fill="${C.surf}"/>
+      <rect x="52" y="38" width="196" height="14" rx="7" fill="#fff" stroke="${C.line}"/>
+      <circle cx="63" cy="45" r="4.5" fill="none" stroke="${C.orange}" stroke-width="2"/>
+      <line x1="66.5" y1="48.5" x2="70" y2="52" stroke="${C.orange}" stroke-width="2" stroke-linecap="round"/>
+      <text x="76" y="48.5" font-family="Manrope,sans-serif" font-size="8" font-weight="700" fill="${C.blue}">"40 t Beton Graz"</text>
+      <g font-family="Manrope,sans-serif">
+        <rect x="40" y="64" width="220" height="32" fill="#fff"/>
+        <circle cx="58" cy="80" r="8" fill="${C.line}"/>
+        <rect x="74" y="72" width="90" height="6" rx="3" fill="${C.line}"/><rect x="74" y="84" width="150" height="5" rx="2.5" fill="${C.line}" opacity=".6"/>
+        <rect x="40" y="98" width="220" height="34" fill="${C.orange}" opacity=".08"/>
+        <rect x="40" y="98" width="3.5" height="34" fill="${C.orange}"/>
+        <circle cx="58" cy="115" r="8" fill="${C.orange}"/>
+        <rect x="74" y="106" width="120" height="6" rx="3" fill="${C.blue}"/><rect x="74" y="118" width="160" height="5" rx="2.5" fill="${C.orange}" opacity=".55"/>
+        <rect x="40" y="134" width="220" height="32" fill="#fff"/>
+        <circle cx="58" cy="150" r="8" fill="${C.line}"/>
+        <rect x="74" y="142" width="80" height="6" rx="3" fill="${C.line}"/><rect x="74" y="154" width="150" height="5" rx="2.5" fill="${C.line}" opacity=".6"/>
+      </g>`),
+    // Wiktor — internal wiki article with sidebar nav
+    wiktor:illu(`
+      <rect x="40" y="30" width="220" height="140" rx="9" fill="#fff" stroke="${C.line}"/>
+      <rect x="40" y="30" width="74" height="140" rx="9" fill="${C.surf}"/>
+      <text x="54" y="50" font-family="Manrope,sans-serif" font-size="8.5" font-weight="800" fill="${C.blue}">Firmen-Wiki</text>
+      <g><rect x="54" y="62" width="46" height="5" rx="2.5" fill="${C.orange}"/><rect x="54" y="76" width="46" height="5" rx="2.5" fill="${C.line}"/><rect x="54" y="90" width="46" height="5" rx="2.5" fill="${C.line}"/><rect x="54" y="104" width="46" height="5" rx="2.5" fill="${C.line}"/><rect x="54" y="118" width="36" height="5" rx="2.5" fill="${C.line}"/></g>
+      <text x="128" y="56" font-family="Manrope,sans-serif" font-size="9.5" font-weight="800" fill="${C.blue}">Projektablage – Standard</text>
+      <rect x="128" y="66" width="116" height="5" rx="2.5" fill="${C.line}"/>
+      <rect x="128" y="78" width="116" height="5" rx="2.5" fill="${C.line}"/>
+      <rect x="128" y="90" width="88" height="5" rx="2.5" fill="${C.line}"/>
+      <rect x="128" y="108" width="116" height="34" rx="6" fill="${C.surf}"/>
+      <rect x="138" y="118" width="14" height="14" rx="3" fill="${C.orange}"/>
+      <rect x="160" y="118" width="74" height="5" rx="2.5" fill="${C.blue}"/><rect x="160" y="128" width="50" height="5" rx="2.5" fill="${C.line}"/>
+      <rect x="128" y="150" width="80" height="5" rx="2.5" fill="${C.line}"/>`),
+    // Kennjamin — staff directory cards with skill match, one highlighted
+    kennjamin:illu(`
+      <g font-family="Manrope,sans-serif">
+        <rect x="36" y="40" width="118" height="50" rx="9" fill="#fff" stroke="${C.line}"/>
+        <circle cx="58" cy="65" r="13" fill="${C.surf}"/><path d="M48 78a10 10 0 0 1 20 0z" fill="${C.line}"/>
+        <text x="78" y="60" font-size="9" font-weight="800" fill="${C.blue}">DI Huber</text>
+        <text x="78" y="72" font-size="7.5" fill="${C.ink}" opacity=".6">Hochbau · 12 J.</text>
+        <rect x="78" y="78" width="30" height="6" rx="3" fill="${C.line}"/>
+        <rect x="146" y="40" width="118" height="50" rx="9" fill="#fff" stroke="${C.orange}" stroke-width="2"/>
+        <circle cx="168" cy="65" r="13" fill="${C.orange}" opacity=".15"/><path d="M158 78a10 10 0 0 1 20 0z" fill="${C.orange}"/>
+        <text x="188" y="60" font-size="9" font-weight="800" fill="${C.blue}">DI Berger</text>
+        <text x="188" y="72" font-size="7.5" fill="${C.orange}" font-weight="700">Statik · Halle ✓</text>
+        <rect x="188" y="78" width="44" height="6" rx="3" fill="${C.orange}"/>
+        <rect x="36" y="100" width="118" height="50" rx="9" fill="#fff" stroke="${C.line}"/>
+        <circle cx="58" cy="125" r="13" fill="${C.surf}"/><path d="M48 138a10 10 0 0 1 20 0z" fill="${C.line}"/>
+        <text x="78" y="120" font-size="9" font-weight="800" fill="${C.blue}">DI Wolf</text>
+        <text x="78" y="132" font-size="7.5" fill="${C.ink}" opacity=".6">TGA · 8 J.</text>
+        <rect x="78" y="138" width="30" height="6" rx="3" fill="${C.line}"/>
+        <rect x="146" y="100" width="118" height="50" rx="9" fill="#fff" stroke="${C.line}"/>
+        <circle cx="168" cy="125" r="13" fill="${C.surf}"/><path d="M158 138a10 10 0 0 1 20 0z" fill="${C.line}"/>
+        <text x="188" y="120" font-size="9" font-weight="800" fill="${C.blue}">DI Klein</text>
+        <text x="188" y="132" font-size="7.5" fill="${C.ink}" opacity=".6">Tiefbau · 5 J.</text>
+        <rect x="188" y="138" width="30" height="6" rx="3" fill="${C.line}"/>
+      </g>`),
+    // Bietmar — tender doc with match gauge
+    bietmar:illu(`
+      <rect x="30" y="40" width="96" height="120" rx="9" fill="#fff" stroke="${C.line}"/>
+      <rect x="30" y="40" width="96" height="22" rx="9" fill="${C.blue}"/>
+      <text x="42" y="55" font-family="Manrope,sans-serif" font-size="8" font-weight="800" fill="#fff">Ausschreibung</text>
+      <g font-family="Manrope,sans-serif">
+        <rect x="44" y="74" width="68" height="5" rx="2.5" fill="${C.line}"/>
+        <rect x="44" y="86" width="68" height="5" rx="2.5" fill="${C.line}"/>
+        <rect x="44" y="98" width="46" height="5" rx="2.5" fill="${C.line}"/>
+        <rect x="44" y="118" width="68" height="5" rx="2.5" fill="${C.line}"/>
+        <rect x="44" y="130" width="56" height="5" rx="2.5" fill="${C.line}"/>
+        <rect x="44" y="144" width="36" height="10" rx="5" fill="${C.surf}"/>
+      </g>
+      <g transform="translate(202,100)">
+        <circle cx="0" cy="0" r="46" fill="none" stroke="${C.surf}" stroke-width="13"/>
+        <circle cx="0" cy="0" r="46" fill="none" stroke="${C.orange}" stroke-width="13" stroke-linecap="round"
+                stroke-dasharray="${2*3.14159*46}" stroke-dashoffset="${2*3.14159*46*(1-0.78)}" transform="rotate(-90)"/>
+        <text x="0" y="2" font-family="Manrope,sans-serif" font-size="26" font-weight="800" fill="${C.blue}" text-anchor="middle">78%</text>
+        <text x="0" y="20" font-family="Manrope,sans-serif" font-size="9" font-weight="700" fill="${C.ink}" opacity=".55" text-anchor="middle">Match</text>
+      </g>
+      <text x="202" y="172" font-family="Manrope,sans-serif" font-size="10" font-weight="800" fill="${C.orange}" text-anchor="middle">passt zum Profil</text>`),
+    // Elvira — realistic LV table with positions, qty, unit, EP/GP + flags
+    elvira:illu(`
+      <rect x="34" y="30" width="232" height="140" rx="9" fill="#fff" stroke="${C.line}"/>
+      <rect x="34" y="30" width="232" height="24" rx="9" fill="${C.blue}"/>
+      <text x="46" y="46" font-family="Manrope,sans-serif" font-size="9" font-weight="800" fill="#fff">Leistungsverzeichnis</text>
+      <text x="222" y="46" font-family="Manrope,sans-serif" font-size="7.5" font-weight="700" fill="#fff" opacity=".8">ÖNORM 2063</text>
+      <g font-family="Manrope,sans-serif" font-size="7.5">
+        <text x="46" y="68" font-weight="800" fill="${C.ink}" opacity=".5">Pos</text>
+        <text x="78" y="68" font-weight="800" fill="${C.ink}" opacity=".5">Bezeichnung</text>
+        <text x="176" y="68" font-weight="800" fill="${C.ink}" opacity=".5">Menge</text>
+        <text x="216" y="68" font-weight="800" fill="${C.ink}" opacity=".5">EP</text>
+      </g>
+      <line x1="40" y1="74" x2="260" y2="74" stroke="${C.line}"/>
+      <g font-family="Manrope,sans-serif" font-size="8" fill="${C.ink}">
+        <text x="46" y="90">01.01</text><text x="78" y="90">Beton C25/30</text><text x="176" y="90">120 m³</text><text x="216" y="90">142,00</text>
+        <circle cx="252" cy="87" r="7" fill="${C.blue}"/><path d="M248 87l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="46" y="108">01.02</text><text x="78" y="108">Bewehrung</text><text x="176" y="108">9,5 t</text><text x="216" y="108">1.180,–</text>
+        <path d="M252 100l6 11h-12z" fill="${C.orange}"/><rect x="251" y="104" width="2" height="4" rx="1" fill="#fff"/><circle cx="252" cy="110" r="1" fill="#fff"/>
+        <text x="46" y="126">01.03</text><text x="78" y="126">Schalung Wand</text><text x="176" y="126">340 m²</text><text x="216" y="126">38,50</text>
+        <circle cx="252" cy="123" r="7" fill="${C.blue}"/><path d="M248 123l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="46" y="144">01.04</text><text x="78" y="144">Abdichtung</text><text x="176" y="144">210 m²</text><text x="216" y="144">26,00</text>
+        <circle cx="252" cy="141" r="7" fill="${C.blue}"/><path d="M248 141l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <rect x="40" y="152" width="148" height="12" rx="4" fill="${C.orange}" opacity=".1"/>
+      <text x="46" y="161" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800" fill="${C.orange}">⚠ Pos 01.02 Menge prüfen</text>
+      <rect x="194" y="152" width="66" height="12" rx="4" fill="${C.blue}"/>
+      <text x="227" y="160.5" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800" fill="#fff" text-anchor="middle">ONLV-Export</text>`),
+    // Angebjörn — realistic offer letter with header, positions, total
+    angebjorn:illu(`
+      <rect x="78" y="22" width="144" height="162" rx="8" fill="#fff" stroke="${C.line}"/>
+      <circle cx="96" cy="42" r="9" fill="${C.orange}"/>
+      <rect x="112" y="36" width="60" height="6" rx="3" fill="${C.blue}"/>
+      <rect x="112" y="46" width="40" height="5" rx="2.5" fill="${C.line}"/>
+      <text x="92" y="74" font-family="Manrope,sans-serif" font-size="9" font-weight="800" fill="${C.blue}">Angebot Nr. 2026-047</text>
+      <line x1="92" y1="80" x2="208" y2="80" stroke="${C.line}"/>
+      <g font-family="Manrope,sans-serif" font-size="7.5" fill="${C.ink}">
+        <text x="92" y="96">Pos 1  Planung TGA</text><text x="186" y="96" font-weight="700">4.200,–</text>
+        <text x="92" y="110">Pos 2  Statik</text><text x="186" y="110" font-weight="700">3.800,–</text>
+        <text x="92" y="124">Pos 3  Bauaufsicht</text><text x="186" y="124" font-weight="700">2.600,–</text>
+      </g>
+      <line x1="92" y1="132" x2="208" y2="132" stroke="${C.line}"/>
+      <rect x="92" y="140" width="116" height="20" rx="5" fill="${C.orange}" opacity=".12"/>
+      <text x="100" y="154" font-family="Manrope,sans-serif" font-size="9" font-weight="800" fill="${C.orange}">Summe netto   10.600,–</text>
+      <rect x="92" y="168" width="50" height="6" rx="3" fill="${C.line}"/>`),
+    // Protokoliver — phone call -> protocol document
+    // Protokoliver — phone call from site OR meeting -> protocol document
+    protokoliver:illu(`
+      <g>
+        <rect x="28" y="40" width="58" height="44" rx="8" fill="${C.surf}"/>
+        <path d="M40 64h10v8H40z" fill="${C.blue}"/><path d="M40 64v16" stroke="${C.blue}" stroke-width="3"/>
+        <circle cx="64" cy="66" r="9" fill="${C.blue}"/><path d="M58 72a6 4 0 0 1 12 0z" fill="${C.orange}"/><rect x="56" y="62" width="16" height="3" rx="1.5" fill="${C.orange}"/>
+        <text x="30" y="98" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800" fill="${C.ink}" opacity=".6">Baustelle</text>
+        <rect x="28" y="112" width="58" height="44" rx="8" fill="${C.surf}"/>
+        <ellipse cx="57" cy="140" rx="20" ry="7" fill="${C.blue}" opacity=".25"/>
+        <circle cx="42" cy="128" r="5" fill="${C.blue}"/><circle cx="57" cy="125" r="5" fill="${C.blue}"/><circle cx="72" cy="128" r="5" fill="${C.blue}"/>
+        <text x="30" y="170" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800" fill="${C.ink}" opacity=".6">Besprechung</text>
+      </g>
+      <circle cx="118" cy="100" r="22" fill="${C.blue}"/>
+      <path d="M111 92a2.5 2.5 0 0 1 2.5-2.5h2a2.5 2.5 0 0 1 2.5 2.2 10 10 0 0 0 .5 2.2 2.5 2.5 0 0 1-.5 2.2l-1.6 1.6a14 14 0 0 0 5 5l1.6-1.6a2.5 2.5 0 0 1 2.2-.5 10 10 0 0 0 2.2.5 2.5 2.5 0 0 1 2.2 2.5v2a2.5 2.5 0 0 1-2.5 2.5 20 20 0 0 1-18-18z" fill="#fff"/>
+      <g stroke="${C.orange}" stroke-width="3" stroke-linecap="round"><path d="M148 92v16"/><path d="M156 86v28"/><path d="M164 94v12"/></g>
+      <rect x="178" y="30" width="88" height="140" rx="9" fill="#fff" stroke="${C.line}"/>
+      <rect x="178" y="30" width="88" height="24" rx="9" fill="${C.blue}"/>
+      <text x="190" y="46" font-family="Manrope,sans-serif" font-size="8" font-weight="800" fill="#fff">Protokoll</text>
+      <g font-family="Manrope,sans-serif" font-size="7.5" fill="${C.ink}">
+        <text x="190" y="72" font-weight="800">Anwesend</text>
+        <rect x="190" y="78" width="64" height="4.5" rx="2.25" fill="${C.line}"/>
+        <text x="190" y="98" font-weight="800">Themen</text>
+        <rect x="190" y="104" width="64" height="4.5" rx="2.25" fill="${C.line}"/>
+        <rect x="190" y="113" width="64" height="4.5" rx="2.25" fill="${C.line}"/>
+        <rect x="190" y="122" width="44" height="4.5" rx="2.25" fill="${C.line}"/>
+        <text x="190" y="142" font-weight="800" fill="${C.orange}">Maßnahmen</text>
+        <rect x="190" y="148" width="64" height="4.5" rx="2.25" fill="${C.orange}" opacity=".5"/>
+      </g>`),
+    // Gutachtrude — on-site inspection: person with hard hat on construction site, voice -> report
+    gutachtrude:illu(`
+      <rect x="28" y="34" width="116" height="132" rx="10" fill="${C.surf}"/>
+      <clipPath id="gtsite"><rect x="28" y="34" width="116" height="132" rx="10"/></clipPath>
+      <g clip-path="url(#gtsite)">
+        <rect x="28" y="120" width="116" height="46" fill="#e3e8f3"/>
+        <rect x="44" y="70" width="34" height="50" fill="#d2d9ea"/>
+        <rect x="48" y="76" width="8" height="8" fill="#fff"/><rect x="62" y="76" width="8" height="8" fill="#fff"/>
+        <rect x="48" y="92" width="8" height="8" fill="#fff"/><rect x="62" y="92" width="8" height="8" fill="#fff"/>
+        <rect x="48" y="108" width="8" height="8" fill="#fff"/><rect x="62" y="108" width="8" height="8" fill="#fff"/>
+        <path d="M104 56h22v8h-22z" fill="${C.blue}"/><path d="M104 56v64" stroke="${C.blue}" stroke-width="5"/><path d="M126 64v10" stroke="${C.blue}" stroke-width="3"/>
+        <circle cx="100" cy="128" r="17" fill="${C.blue}"/>
+        <path d="M89 128a11 7 0 0 1 22 0z" fill="${C.orange}"/>
+        <rect x="86" y="124" width="28" height="5" rx="2.5" fill="${C.orange}"/>
+        <circle cx="100" cy="120" r="7" fill="#f6c9a8"/>
+      </g>
+      <g stroke="${C.orange}" stroke-width="3.5" stroke-linecap="round"><path d="M156 92v20"/><path d="M165 84v36"/><path d="M174 94v16"/></g>
+      <rect x="190" y="30" width="76" height="140" rx="9" fill="#fff" stroke="${C.line}"/>
+      <rect x="190" y="30" width="76" height="22" rx="9" fill="${C.blue}"/>
+      <text x="201" y="45" font-family="Manrope,sans-serif" font-size="8" font-weight="800" fill="#fff">Befund</text>
+      <rect x="200" y="60" width="56" height="30" rx="4" fill="${C.surf}"/>
+      <path d="M200 90l16-16 10 10 12-13 18 19z" fill="${C.blue}" opacity=".75"/>
+      <circle cx="213" cy="72" r="5" fill="${C.orange}"/>
+      <g font-family="Manrope,sans-serif" font-size="7.5" fill="${C.ink}">
+        <text x="200" y="108" font-weight="800" fill="${C.orange}">M1</text><rect x="215" y="103" width="41" height="4.5" rx="2.25" fill="${C.line}"/>
+        <rect x="200" y="116" width="56" height="4.5" rx="2.25" fill="${C.line}"/>
+        <text x="200" y="134" font-weight="800" fill="${C.orange}">M2</text><rect x="215" y="129" width="41" height="4.5" rx="2.25" fill="${C.line}"/>
+        <text x="200" y="152" font-size="7" fill="${C.blue}" font-weight="700">ÖNORM B 4710</text>
+      </g>`),
+    // Gefahrgudrun — safety data sheet (GHS) -> excel register
+    gefahrgudrun:illu(`
+      <g fill="#fff" stroke="${C.line}"><rect x="42" y="48" width="74" height="96" rx="8"/><rect x="32" y="38" width="74" height="96" rx="8"/></g>
+      <rect x="32" y="38" width="74" height="20" rx="8" fill="${C.blue}"/>
+      <text x="42" y="52" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800" fill="#fff">SDB</text>
+      <path d="M69 66l16 28H53z" fill="none" stroke="${C.orange}" stroke-width="3"/>
+      <rect x="67.5" y="74" width="3" height="9" rx="1.5" fill="${C.orange}"/><circle cx="69" cy="88" r="1.8" fill="${C.orange}"/>
+      <rect x="42" y="102" width="54" height="4.5" rx="2.25" fill="${C.line}"/>
+      <rect x="42" y="112" width="54" height="4.5" rx="2.25" fill="${C.line}"/>
+      <rect x="42" y="122" width="38" height="4.5" rx="2.25" fill="${C.line}"/>
+      <path d="M120 92h26" stroke="${C.orange}" stroke-width="3" stroke-dasharray="4 5"/><path d="M142 86l8 6-8 6" fill="none" stroke="${C.orange}" stroke-width="3"/>
+      <rect x="158" y="44" width="104" height="112" rx="9" fill="#fff" stroke="${C.line}"/>
+      <rect x="158" y="44" width="104" height="20" rx="9" fill="#1d7a4d"/>
+      <text x="169" y="58" font-family="Manrope,sans-serif" font-size="8" font-weight="800" fill="#fff">Arbeitsstoffverz.</text>
+      <g stroke="${C.line}"><line x1="196" y1="64" x2="196" y2="156"/><line x1="228" y1="64" x2="228" y2="156"/><line x1="158" y1="84" x2="262" y2="84"/><line x1="158" y1="104" x2="262" y2="104"/><line x1="158" y1="124" x2="262" y2="124"/><line x1="158" y1="140" x2="262" y2="140"/></g>
+      <g font-family="Manrope,sans-serif" font-size="6.5" fill="${C.ink}" opacity=".7"><text x="164" y="78">Stoff</text><text x="202" y="78">CAS</text><text x="234" y="78">GHS</text></g>`),
+    // Marketingried — project -> social posts (LinkedIn-like)
+    marketingried:illu(`
+      <rect x="40" y="56" width="92" height="88" rx="9" fill="${C.blue}"/>
+      <path d="M40 122l22-24 15 16 14-16 21 26z" fill="${C.blue2}"/>
+      <circle cx="108" cy="80" r="8" fill="${C.orange}"/>
+      <rect x="52" y="128" width="50" height="5" rx="2.5" fill="#fff" opacity=".6"/>
+      <path d="M138 100h24" stroke="${C.orange}" stroke-width="3" stroke-dasharray="4 5"/><path d="M158 94l8 6-8 6" fill="none" stroke="${C.orange}" stroke-width="3"/>
+      <rect x="176" y="38" width="86" height="54" rx="8" fill="#fff" stroke="${C.line}"/>
+      <circle cx="192" cy="54" r="8" fill="${C.orange}"/><rect x="206" y="49" width="40" height="5" rx="2.5" fill="${C.blue}"/><rect x="206" y="58" width="28" height="4" rx="2" fill="${C.line}"/>
+      <rect x="186" y="72" width="66" height="4.5" rx="2.25" fill="${C.line}"/><rect x="186" y="80" width="50" height="4.5" rx="2.25" fill="${C.line}"/>
+      <rect x="176" y="104" width="86" height="54" rx="8" fill="#fff" stroke="${C.line}"/>
+      <circle cx="192" cy="120" r="8" fill="${C.blue}"/><rect x="206" y="115" width="40" height="5" rx="2.5" fill="${C.blue}"/><rect x="206" y="124" width="28" height="4" rx="2" fill="${C.line}"/>
+      <rect x="186" y="138" width="66" height="4.5" rx="2.25" fill="${C.line}"/><rect x="186" y="146" width="50" height="4.5" rx="2.25" fill="${C.line}"/>`),
+    // Zeichmund — sketch -> rendering
+    zeichmund:illu(`
+      <rect x="36" y="44" width="96" height="112" rx="9" fill="#fff" stroke="${C.line}"/>
+      <text x="48" y="62" font-family="Manrope,sans-serif" font-size="7.5" font-weight="800" fill="${C.ink}" opacity=".5">Skizze</text>
+      <path d="M50 140l24-46 16 26 12-18 18 38z" fill="none" stroke="${C.line}" stroke-width="2.5"/>
+      <path d="M50 140h66" stroke="${C.line}" stroke-width="2.5"/>
+      <rect x="50" y="72" width="34" height="4.5" rx="2.25" fill="${C.line}"/>
+      <path d="M138 100h26" stroke="${C.orange}" stroke-width="3" stroke-dasharray="4 5"/><path d="M160 94l8 6-8 6" fill="none" stroke="${C.orange}" stroke-width="3"/>
+      <rect x="180" y="44" width="84" height="112" rx="9" fill="${C.blue}"/>
+      <path d="M188 140l30-44 20 24 16-20 22 40z" fill="${C.blue2}"/>
+      <path d="M188 140h76" stroke="#fff" stroke-width="2" opacity=".4"/>
+      <circle cx="240" cy="74" r="11" fill="${C.orange}"/>`),
+    // Chatgar — secure AI chat (kept for completeness, not used)
+    chatgar:illu(`
+      <rect x="56" y="44" width="150" height="96" rx="14" fill="${C.blue}"/>
+      <rect x="74" y="66" width="80" height="8" rx="4" fill="#fff" opacity=".85"/>
+      <rect x="74" y="84" width="114" height="8" rx="4" fill="#fff" opacity=".5"/>
+      <circle cx="216" cy="120" r="34" fill="#fff" stroke="${C.line}"/>
+      <path d="M216 100a13 13 0 0 0-13 13v6h-3v16h32v-16h-3v-6a13 13 0 0 0-13-13z" fill="none" stroke="${C.orange}" stroke-width="5" stroke-linejoin="round"/>`)
+  };
+
+  const AGENTS=[
+    {key:'archibald',name:'Archibald',role:'Der Projektarchivar',desc:'Durchsucht Ihr Projektarchiv und findet Referenzprojekte aus vergangenen Aufträgen, nach Inhalt statt nach Dateinamen. „Haben wir sowas schon gebaut?" findet auch Vergleichbares, dessen Namen Sie längst vergessen haben.',chip:'Findet ähnliche Referenzprojekte'},
+    {key:'normbert',name:'Normbert',role:'Der Normen-Experte',desc:'Beantwortet Fragen zu OIB-Richtlinien, ÖNORMEN und technischen Standards und liefert zu jeder Antwort den Quellenverweis, damit Sie sie nachprüfen können.',chip:'Antwort mit Quellenverweis'},
+    {key:'mailanie',name:'Mailanie',role:'Das E-Mail-Gedächtnis',desc:'Durchsucht die Postfächer im gesamten Unternehmen und findet Korrespondenz zu Projekten, Kunden oder Vorgängen, auch wenn das Stichwort nie im Betreff stand.',chip:'Suche nach Bedeutung'},
+    {key:'protokoliver',name:'Protokoliver',role:'Der Protokollierer',desc:'Erstellt Protokolle per Telefonanruf und schickt sie ans Team, ob das Baustellenprotokoll vom Auto aus nach der Begehung oder die Mitschrift einer Besprechung. Er stellt die nötigen Fragen, das fertige Protokoll ist da, bevor Sie zurück im Büro sind.',chip:'Baustelle & Besprechung per Anruf'},
+    {key:'bietmar',name:'Bietmar',role:'Der Ausschreibungs-Experte',desc:'Prüft Ausschreibungsunterlagen und gibt eine fundierte Empfehlung, ob sich die Angebotslegung lohnt, abgeglichen mit Ihrem Firmenprofil.',chip:'Lohnt sich das Angebot?'},
+    {key:'elvira',name:'Elvira',role:'Die LV-Expertin',desc:'Prüft Leistungsverzeichnisse gegen Leistungsbuch und Ausschreibung auf fehlende Positionen, Inkonsistenzen und Widersprüche zwischen Dokumenten, auch bei PDFs mit mehreren hundert Seiten. Sie erstellt auch fertige ONLV-Dateien mit Massen und Preisen, die sie aus Ihren früheren Ausschreibungen und LVs lernt.',chip:'Prüft & erstellt ONLV-Dateien'},
+    {key:'angebjorn',name:'Angebjörn',role:'Der Angebots-Experte',desc:'Erstellt Angebote aus Kundenanfragen, Ausschreibungen oder Gesprächsnotizen, abgestimmt auf Ihr Firmenprofil und Ihre Preise. Eigene kalkulierte Positionen können Sie hochladen.',chip:'Aus Anfrage → fertiges Angebot'},
+    {key:'gutachtrude',name:'Gutachtrude',role:'Die Berichtschreiberin',desc:'Nimmt den Befund direkt vor Ort bei der Begehung auf. Sie sprechen Ihre Beobachtungen ein und ergänzen Fotos, während Sie über die Baustelle gehen. Daraus entsteht ein fertiges Gutachten als editierbares Word-Dokument.',chip:'Aufnahme direkt auf der Baustelle'},
+    {key:'gefahrgudrun',name:'Gefahrgudrun',role:'Die Gefahrstoff-Verzeichnerin',desc:'Extrahiert aus Stapeln von Sicherheitsdatenblättern die gesetzlichen Pflichtfelder und liefert ein fertiges Arbeitsstoffverzeichnis als Excel.',chip:'Datenblätter → Excel-Register'},
+    {key:'marketingried',name:'Marketingried',role:'Die Content-Strategie',desc:'Erstellt aus abgeschlossenen Referenzprojekten fertige Marketing-Inhalte für Website, LinkedIn und Instagram, in einem Durchgang.',chip:'Projekt → fertige Beiträge'},
+    {key:'zeichmund',name:'Zeichmund',role:'Der Visualisierer',desc:'Erstellt Renderings und Visualisierungen für Umbauten, etwa für Ausschreibungen und Präsentationen.',chip:'Skizze → Rendering'},
+    {key:'wiktor',name:'Wiktor',role:'Der Wiki-Experte',desc:'Beantwortet Fragen zu internen Prozessen, Abläufen und Qualitätsrichtlinien Ihres Unternehmens. Die Antwort auf „Wie machen wir das bei uns nochmal?".',chip:'Internes Wissen auf Abruf'},
+    {key:'kennjamin',name:'Kennjamin',role:'Der Netzwerker',desc:'Findet die richtige Ansprechperson im Unternehmen, nach Kompetenzen, Erfahrungen und Projektbeteiligungen.',chip:'Wer kann das bei uns?'}
+  ];
+
+  function agentRowHTML(a,idx){
+    return `<div class="agent-row${idx%2===1?' reverse':''}">
+      <div class="ar-illu">${ILLU[a.key]||''}</div>
+      <div class="ar-text">
+        <div class="ar-name">${a.name}</div>
+        <div class="ar-role">${a.role}</div>
+        <div class="ar-desc">${a.desc}</div>
+        <div class="ar-chip"><svg class="lucide" viewBox="0 0 24 24">${L.flash}</svg> ${a.chip}</div>
+      </div>
+    </div>`;
+  }
+  const firstRows=document.getElementById('agentRows');
+  const moreRows=document.getElementById('agentRowsMore');
+  if(firstRows&&moreRows){
+    firstRows.innerHTML=AGENTS.slice(0,4).map((a,i)=>agentRowHTML(a,i)).join('');
+    moreRows.innerHTML=AGENTS.slice(4).map((a,i)=>agentRowHTML(a,i+4)).join('');
+    const btn=document.getElementById('agentMoreBtn');
+    const lbl=document.getElementById('agentMoreLabel');
+    btn.addEventListener('click',()=>{
+      const open=moreRows.classList.toggle('show');
+      btn.classList.toggle('open',open);
+      lbl.textContent=open?'Weniger anzeigen':'Weitere 9 Agenten anzeigen';
+    });
+  }
+
+  // ---------- DATENBOX: fill data-type icons ----------
+  document.querySelectorAll('.data-box .db-type[data-ic]').forEach(t=>{
+    const key=t.getAttribute('data-ic');
+    const slot=t.querySelector('.dt-ic');
+    if(key&&L[key]&&slot) slot.innerHTML=`<svg class="lucide" viewBox="0 0 24 24">${L[key]}</svg>`;
+  });
+
+
+  // ---------- PAIN-POINT SELECTOR ----------
+  const PAIN={
+    archiv:{
+      title:"Alte Projekte und Wissen wiederfinden",
+      agents:[
+        {ic:"folder",name:"Archibald",role:"Projektarchiv-Suche",desc:"Sucht im Projektarchiv nach Inhalt, nicht nur nach Dateinamen. Eine Suche nach „Schule\u201c findet auch vergleichbare Kindergärten."},
+        {ic:"wiki",name:"Wiktor",role:"Firmen-Wiki",desc:"Kennt interne Abläufe und Qualitätsrichtlinien. Sinnvoll, wenn das Wissen heute an einzelnen Köpfen hängt."}
+      ],
+      script:[
+        {t:"Neues Projekt am Tisch, und zuerst sucht jemand ein ähnliches in den alten Ordnern.",q:false},
+        {t:"Was passiert mit dem Wissen, wenn der Kollege, der alles im Kopf hat, in Pension geht?",q:true},
+        {t:"Zeigen: „Haben wir sowas schon gebaut?\u201c → ins Projekt gehen, Auftraggeber, Zeitraum, Leistungen.",q:false}
+      ]
+    },
+    normen:{
+      title:"Normen und Vorschriften recherchieren",
+      agents:[
+        {ic:"book",name:"Normbert",role:"Normen-Suche",desc:"Beantwortet Fragen zu ÖNORMEN, OIB-Richtlinien und Standards und gibt zu jeder Antwort die Fundstelle an, damit Sie nachprüfen können."}
+      ],
+      script:[
+        {t:"Wie prüfen Sie heute, ob eine Norm novelliert wurde?",q:true},
+        {t:"Betonen: es sind nur Ihre eigenen, hochgeladenen Normen. Kein Internet-Zugriff, keine fremden Daten.",q:false},
+        {t:"Zeigen: Frage stellen → Antwort mit Fundstelle. Genau der Punkt, an dem ChatGPT ungenau wird.",q:false}
+      ]
+    },
+    vertraege:{
+      title:"Verträge und Vertragsbedingungen prüfen",
+      agents:[
+        {ic:"shield",name:"Normbert / Archibald",role:"Vertrags-Prüfung",desc:"Liest die Vertragsunterlagen und hebt heraus, was für den Auftragnehmer nachteilig ist: Abzüge, Gewährleistungen, Fristen."},
+        {ic:"folder",name:"Archibald",role:"Vertrags-Archiv",desc:"Durchsucht Ihre bestehenden Verträge, etwa: „Wie lange war ich bei Projekt X zur Gewährleistung verpflichtet?\u201c"}
+      ],
+      script:[
+        {t:"Ihre Worte: 30 Seiten reinschicken und filtern, was für den Auftragnehmer zu beachten ist.",q:false},
+        {t:"Wie viele solcher Vertragswerke prüfen Sie im Monat, und wie lange dauert eins?",q:true},
+        {t:"Wichtig: das Werkzeug liefert die Fundstelle, die Entscheidung treffen Sie. Kontrolle bleibt bei Ihnen.",q:false}
+      ]
+    },
+    ausschreibung:{
+      title:"Ausschreibungen und Leistungsverzeichnisse",
+      agents:[
+        {ic:"radar",name:"Bietmar",role:"Ausschreibungs-Prüfung",desc:"Gleicht die Unterlagen mit Ihrem Profil ab und gibt eine klare Einschätzung: lohnt sich die Angebotslegung oder nicht."},
+        {ic:"shield",name:"Elvira",role:"LV-Prüfung",desc:"Prüft das Leistungsverzeichnis auf Schlüssigkeit und gleicht gegen hinterlegte Kennwerte ab, etwa Bewehrung je m³ Beton."}
+      ],
+      script:[
+        {t:"Ihr Punkt: wenn das LV des Ausschreibers nicht stimmt, gibt es große Spreizungen bei den Angeboten.",q:false},
+        {t:"Wie lange brauchen Sie heute, um zu beurteilen, ob ein LV schlüssig ist?",q:true},
+        {t:"Zeigen: Elvira prüft das LV. „Ist das schlüssig?\u201c, „Hier könnten Mehrkosten entstehen\u201c.",q:false}
+      ]
+    },
+    angebot:{
+      title:"Angebote erstellen",
+      agents:[
+        {ic:"draft",name:"Angebjörn",role:"Angebots-Erstellung",desc:"Erstellt das Angebot aus Anfrage, Ausschreibung oder Notizen, abgestimmt auf Ihr Profil und Ihre Preise. Eigene kalkulierte Positionen können Sie hochladen."},
+        {ic:"radar",name:"Bietmar",role:"Vorgelagert",desc:"Bewertet die Ausschreibung und übergibt sie direkt an Angebjörn, ein durchgehender Ablauf."}
+      ],
+      script:[
+        {t:"Bei eigener Kalkulation wichtig: Angebjörn ersetzt sie nicht, er baut das Dokument darum herum.",q:false},
+        {t:"Wie viel Zeit steckt bei Ihnen im Zusammenstellen des fertigen Angebots-Dokuments?",q:true},
+        {t:"Zeigen: kalkulierte Positionen hochladen → fertiges Angebot mit Einleitung, Konditionen, Schlussformel.",q:false}
+      ]
+    },
+    email:{
+      title:"E-Mails und Korrespondenz wiederfinden",
+      agents:[
+        {ic:"mail",name:"Mailanie",role:"E-Mail-Suche",desc:"Durchsucht die Postfächer nach Inhalt, nicht nur nach Betreff. Beantwortet auch „Was ist der aktuelle Stand zu Projekt X?\u201c."}
+      ],
+      script:[
+        {t:"Zentrale Mail-Ablage vorhanden, aber suchbar nur nach Betreff, nicht nach dem Inhalt im Zusammenhang.",q:false},
+        {t:"Wie oft suchen Sie eine Mail, von der Sie wissen, dass es sie gibt, aber nicht mehr wo?",q:true},
+        {t:"Beispiel Gewährleistungsfall: eine alte Mail finden. Zeigen: Suche nach Inhalt plus die Quell-Mails dazu.",q:false}
+      ]
+    },
+    protokoll:{
+      title:"Protokolle, Begehungen und Berichte",
+      agents:[
+        {ic:"phone",name:"Protokoliver",role:"Protokoll per Anruf",desc:"Baustellenprotokoll über einen Telefonanruf. Er stellt die nötigen Fragen und schickt das fertige Protokoll ans Team."},
+        {ic:"fileedit",name:"Gutachtrude",role:"Begehungs-Berichte",desc:"Begehung vor Ort diktieren, Fotos und passende Normen ergänzen, als Word-Dokument, das Sie noch bearbeiten können."}
+      ],
+      script:[
+        {t:"Vor Ort diktieren statt im Büro abtippen: wenn Sie ins Auto steigen, ist der Befund schon strukturiert.",q:false},
+        {t:"Wie viele Protokolle und Berichte macht Ihr Team pro Woche, und wie lange dauert die Nachbearbeitung?",q:true},
+        {t:"Zeigen: gesprochener Befund → saubere Zusammenfassung, getrennte Mängel, Foto mit Markierung.",q:false}
+      ]
+    },
+    marketing:{
+      title:"Referenzen und Außenwirkung",
+      agents:[
+        {ic:"pen",name:"Marketingried",role:"Referenz-Beiträge",desc:"Macht aus einem abgeschlossenen Referenzprojekt fertige Beiträge für Website, LinkedIn und Instagram, in einem Arbeitsschritt."},
+        {ic:"ruler",name:"Zeichmund",role:"Visualisierung",desc:"Erstellt Renderings und Visualisierungen für Umbauten, etwa für Ausschreibungen und Präsentationen."}
+      ],
+      script:[
+        {t:"Sobald der Kunde das Projekt freigibt: ein Schritt, und es liegt als LinkedIn- und Website-Beitrag vor.",q:false},
+        {t:"Wer macht bei Ihnen heute die Referenz-Beiträge, und wie oft bleiben sie liegen?",q:true},
+        {t:"Vorteil: die Projektdaten sind über Archibald schon im System, viel Eingabe entfällt.",q:false}
+      ]
+    }
+  };
+
+  // fill pain-button icons + hint/foot icons from L
+  document.querySelectorAll('#painGrid .pi[data-ic], .pain-hint .lucide-slot[data-ic], .pain-foot .lucide-slot[data-ic]').forEach(slot=>{
+    const key=slot.getAttribute('data-ic');
+    if(key&&L[key]) slot.innerHTML=`<svg class="lucide" viewBox="0 0 24 24">${L[key]}</svg>`;
+  });
+
+  const painButtons=Array.from(document.querySelectorAll('.pain-btn'));
+  const prioResults=document.getElementById('prioResults');
+  const painHint=document.getElementById('painHint');
+  const painFoot=document.getElementById('painFoot');
+  let order=[]; // array of pain keys in click order
+
+  function buildPanel(key,rank){
+    const data=PAIN[key];
+    const panel=document.createElement('div');
+    panel.className='pain-result';
+    let agentsHTML='';
+    data.agents.forEach(a=>{
+      const icon=L[a.ic]?`<svg class="lucide" viewBox="0 0 24 24">${L[a.ic]}</svg>`:'';
+      agentsHTML+=`<div class="pr-agent"><div class="ai">${icon}</div><div><div class="ar">${a.role}</div><div class="an">${a.name}</div><div class="ad">${a.desc}</div></div></div>`;
+    });
+    let scriptHTML='';
+    data.script.forEach(s=>{scriptHTML+=`<li class="${s.q?'q':''}">${s.t}</li>`;});
+    panel.innerHTML=`
+      <div class="pr-head">
+        <div class="pr-rank">${rank}</div>
+        <div><div class="pr-eyebrow">Priorität ${rank}</div><h3>${data.title}</h3></div>
+      </div>
+      <div class="pr-body">
+        <div class="pr-col">
+          <h4><svg class="lucide" viewBox="0 0 24 24">${L.robot}</svg> Die passenden Werkzeuge</h4>
+          ${agentsHTML}
+        </div>
+        <div class="pr-col">
+          <h4><svg class="lucide" viewBox="0 0 24 24">${L.chat}</svg> Gesprächsfaden &amp; Vertiefung</h4>
+          <ul class="pr-script">${scriptHTML}</ul>
+          <div class="pr-deepen">
+            <div class="dt">Immer nachfragen</div>
+            <span>„Wie löst ihr das aktuell?"</span>
+            <span>„Bei wie vielen Leuten kommt das vor?"</span>
+            <span>„Wie oft, einmal die Woche, einmal am Tag?"</span>
+          </div>
+        </div>
+      </div>`;
+    return panel;
+  }
+
+  function render(){
+    // update rank badges on buttons
+    painButtons.forEach(b=>{
+      const k=b.dataset.pain;
+      const idx=order.indexOf(k);
+      const badge=b.querySelector('.rank-badge');
+      if(idx>=0){b.classList.add('active');badge.textContent=idx+1;}
+      else{b.classList.remove('active');badge.textContent='';}
+    });
+    // rebuild panels in order
+    prioResults.innerHTML='';
+    order.forEach((k,i)=>prioResults.appendChild(buildPanel(k,i+1)));
+    painHint.style.display=order.length?'none':'';
+    painFoot.style.display=order.length?'flex':'none';
+  }
+
+  painButtons.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const key=btn.dataset.pain;
+      const idx=order.indexOf(key);
+      if(idx>=0) order.splice(idx,1); // deselect, others renumber
+      else order.push(key);          // select -> next rank
+      render();
+    });
+  });
+</script>
+</body>
+</html>
