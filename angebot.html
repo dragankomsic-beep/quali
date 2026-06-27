@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engineering AI Hub · Preise</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --primary:#122D6E;--accent:#FF5100;--white:#fff;--surface:#F0F2F8;
+    --gradient-blue:linear-gradient(135deg,#122D6E 0%,#1a3fa0 50%,#2255d4 100%);
+    --gradient-orange:linear-gradient(135deg,#FF5100 0%,#e03d00 100%);
+    --muted:rgba(18,45,110,0.60);--line:rgba(18,45,110,0.10);--ok:#16a34a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Manrope',sans-serif;color:var(--primary);background:var(--surface);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 48px;}
+  .icn{display:inline-block;vertical-align:middle;}
+  .icn svg{width:1em;height:1em;display:block;}
+  .hero{background:var(--gradient-blue);color:#fff;padding:46px 48px 38px;position:relative;overflow:hidden;}
+  .blob{position:absolute;border-radius:50%;background:var(--gradient-orange);}
+  .b1{width:300px;height:300px;top:-130px;right:-60px;opacity:0.45;}
+  .b2{width:150px;height:150px;bottom:-70px;left:32%;opacity:0.20;}
+  .hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2;}
+  .logo-row{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+  .logo-badge{width:28px;height:28px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;}
+  .logo-word{font-weight:800;font-size:18px;}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;opacity:0.82;margin-bottom:12px;}
+  .hero h1{font-size:32px;font-weight:800;letter-spacing:-0.02em;max-width:820px;line-height:1.12;margin-bottom:12px;}
+  .hero p{font-size:16px;color:rgba(255,255,255,0.82);max-width:730px;}
+  .tabs{display:flex;gap:8px;margin-top:26px;flex-wrap:wrap;}
+  .tab{background:rgba(255,255,255,0.10);color:#fff;border:1px solid rgba(255,255,255,0.18);border-radius:10px;padding:11px 17px;font-family:'Manrope';font-weight:700;font-size:13.5px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s;}
+  .tab:hover{background:rgba(255,255,255,0.18);}
+  .tab.active{background:#fff;color:var(--primary);border-color:#fff;}
+  .tab .icn{font-size:16px;}
+  .panel{display:none;padding:44px 0 60px;}
+  .panel.active{display:block;}
+  .sec-eyebrow{color:var(--accent);font-weight:700;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
+  .sec-title{font-size:25px;font-weight:800;letter-spacing:-0.02em;margin-bottom:8px;}
+  .sec-sub{font-size:15px;color:var(--muted);max-width:820px;margin-bottom:28px;}
+  .block{margin-bottom:48px;}
+  .ident{display:flex;align-items:stretch;gap:0;border-radius:14px;overflow:hidden;margin-bottom:30px;box-shadow:0 2px 14px rgba(18,45,110,0.07);}
+  .id{flex:1;padding:18px 22px;background:#fff;display:flex;flex-direction:column;gap:4px;border-right:1px solid var(--line);}
+  .id:last-child{border-right:none;}
+  .id.active{background:var(--gradient-blue);color:#fff;}
+  .id .q{font-size:13.5px;font-weight:700;font-style:italic;}
+  .id .a{font-size:12.5px;color:var(--muted);}
+  .id.active .a{color:rgba(255,255,255,0.78);}
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch;}
+  .tier{background:#fff;border-radius:18px;padding:30px 26px;box-shadow:0 4px 20px rgba(18,45,110,0.10);display:flex;flex-direction:column;position:relative;border:2px solid transparent;}
+  .tier::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;border-radius:18px 18px 0 0;}
+  .tier.t1::before{background:linear-gradient(90deg,#2255d4,#4a7ae0);}
+  .tier.t2::before{background:var(--gradient-orange);}
+  .tier.t3::before{background:linear-gradient(90deg,#122D6E,#1a3fa0);}
+  .tier.feat{border-color:var(--accent);box-shadow:0 16px 44px rgba(255,81,0,0.18);transform:translateY(-10px);}
+  .pop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gradient-orange);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;padding:6px 15px;border-radius:18px;white-space:nowrap;box-shadow:0 4px 12px rgba(255,81,0,0.3);}
+  .tname{font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);margin-bottom:5px;}
+  .tier h3{font-size:22px;font-weight:800;margin-bottom:3px;}
+  .trange{font-size:13px;color:var(--muted);margin-bottom:8px;}
+  .tdesc{font-size:12.5px;color:var(--muted);margin-bottom:18px;min-height:48px;}
+  .price{display:flex;align-items:baseline;gap:5px;}
+  .price .amt{font-size:34px;font-weight:800;letter-spacing:-0.02em;}
+  .price .per{font-size:13px;color:var(--muted);font-weight:600;}
+  .pextra{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .punlim{font-size:12.5px;font-weight:700;color:var(--accent);margin:9px 0 0;display:flex;align-items:center;gap:6px;}
+  .div{height:1px;background:var(--line);margin:16px 0;}
+  .setup{font-size:11.5px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);line-height:1.5;}
+  .setup b{color:var(--primary);font-weight:700;}
+  .setup .once{display:inline-block;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;color:var(--accent);background:rgba(255,81,0,0.10);padding:1px 7px;border-radius:9px;margin-bottom:4px;}
+
+  .setup{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5;}
+  .flabel{font-size:10.5px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;}
+  ul.f{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+  ul.f li{display:flex;align-items:flex-start;gap:10px;font-size:13px;font-weight:500;}
+  ul.f li .icn{color:var(--accent);font-size:16px;flex-shrink:0;margin-top:1px;width:18px;text-align:center;}
+  ul.f li b{font-weight:700;}
+  .hl{background:rgba(255,81,0,0.07);border-radius:10px;padding:12px 14px;margin-bottom:16px;}
+  .hl .hh{font-size:10.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--accent);margin-bottom:7px;}
+  .hl ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
+  .hl li{font-size:12.5px;font-weight:600;display:flex;gap:9px;align-items:flex-start;}
+  .hl li .icn{color:var(--accent);font-size:15px;margin-top:1px;flex-shrink:0;width:17px;text-align:center;}
+  .spacer{flex:1;}
+  .cta{width:100%;border:none;border-radius:9px;padding:12px;font-family:'Manrope';font-weight:700;font-size:13.5px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;}
+  .indiv{background:#fff;border-radius:14px;padding:22px 26px;margin-top:16px;display:flex;align-items:center;gap:18px;box-shadow:0 2px 12px rgba(18,45,110,0.06);}
+  .indiv .ic{width:46px;height:46px;border-radius:11px;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .indiv .ic .icn{font-size:23px;color:var(--accent);}
+  .indiv h4{font-size:16px;font-weight:800;margin-bottom:3px;}
+  .indiv p{font-size:13.5px;color:var(--muted);}
+  .trust{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:22px;flex-wrap:wrap;padding:18px;background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(18,45,110,0.05);}
+  .trust span{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;}
+  .trust .icn{color:var(--accent);font-size:18px;}
+  .onb{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.6;}
+  .insight{background:var(--gradient-blue);border-radius:14px;padding:24px 28px;color:#fff;margin-top:24px;display:flex;gap:16px;align-items:flex-start;}
+  .insight .icn{color:#ff8a52;font-size:24px;flex-shrink:0;margin-top:2px;}
+  .insight strong{color:#fff;}
+  .insight p{font-size:14.5px;color:rgba(255,255,255,0.88);}
+  .ladder{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .lstep{background:#fff;border-radius:14px;padding:24px 24px;box-shadow:0 2px 12px rgba(18,45,110,0.06);position:relative;}
+  .lstep .badge{font-size:10.5px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;padding:3px 10px;border-radius:12px;display:inline-block;margin-bottom:12px;}
+  .lstep.e .badge{background:var(--surface);color:var(--muted);}
+  .lstep.p .badge{background:rgba(255,81,0,0.12);color:var(--accent);}
+  .lstep.ent .badge{background:var(--gradient-blue);color:#fff;}
+  .lstep h4{font-size:16px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .lstep h4 .icn{color:var(--accent);font-size:18px;}
+  .lstep p{font-size:13px;color:var(--muted);}
+  .lstep.na{opacity:0.6;}.lstep.na h4{color:var(--muted);}
+  .lstep .arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:20px;z-index:2;}
+  .cats{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .cat{background:#fff;border-radius:14px;padding:22px 24px;box-shadow:0 2px 12px rgba(18,45,110,0.06);}
+  .cat h4{font-size:16px;font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:9px;}
+  .cat h4 .icn{color:var(--accent);font-size:20px;}
+  .cat .agts{font-size:12.5px;color:var(--muted);margin-bottom:12px;}
+  .cat .feat{font-size:13px;margin-bottom:7px;display:flex;gap:9px;align-items:flex-start;}
+  .cat .feat .icn{font-size:15px;margin-top:1px;flex-shrink:0;width:17px;text-align:center;}
+  .cat .feat.e .icn{color:#94a3b8;}.cat .feat.p .icn{color:var(--accent);}.cat .feat.ent .icn{color:var(--primary);}
+  .cat .tag{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.03em;padding:2px 7px;border-radius:10px;margin-left:auto;flex-shrink:0;white-space:nowrap;align-self:center;}
+  .tag.e{background:var(--surface);color:var(--muted);}.tag.p{background:rgba(255,81,0,0.12);color:var(--accent);}.tag.ent{background:rgba(18,45,110,0.1);color:var(--primary);}
+  .cat.findcat{border-top:3px solid var(--accent);}
+  .intern-wrap{margin-top:40px;border:1.5px dashed rgba(18,45,110,0.25);border-radius:16px;padding:26px 28px 28px;background:rgba(18,45,110,0.025);}
+  .intern-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:#fff;border:1px solid var(--line);padding:5px 12px;border-radius:20px;margin-bottom:6px;}
+  .intern-tag .icn{font-size:14px;}
+  .intern-title{font-size:18px;font-weight:800;margin-bottom:4px;}
+  .intern-sub{font-size:13.5px;color:var(--muted);margin-bottom:20px;max-width:760px;}
+  .intern-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .intern-card{background:#fff;border-radius:12px;padding:22px 24px;box-shadow:0 1px 8px rgba(18,45,110,0.05);}
+  .intern-card h5{font-size:15px;font-weight:800;margin-bottom:3px;display:flex;align-items:center;gap:9px;}
+  .intern-card h5 .icn{color:var(--accent);font-size:18px;}
+  .intern-card .ip{font-size:20px;font-weight:800;margin:8px 0 2px;}
+  .intern-card .ip small{font-size:12px;font-weight:600;color:var(--muted);}
+  .intern-card ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:12px;}
+  .intern-card ul li{font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;}
+  .intern-card ul li .icn{color:var(--accent);font-size:14px;margin-top:1px;flex-shrink:0;}
+  .intern-note{font-size:12px;color:var(--muted);margin-top:16px;line-height:1.55;font-style:italic;}
+  .roi-section{margin-bottom:10px;}
+  .roi-agents{background:#fff;border-radius:16px;padding:22px 24px;box-shadow:0 2px 16px rgba(18,45,110,0.07);}
+  .ra-group{margin-bottom:18px;}
+  .ra-group:last-child{margin-bottom:0;}
+  .ra-grp-h{font-size:12px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--primary);margin-bottom:6px;padding-bottom:5px;border-bottom:2px solid var(--surface);}
+  .ra-h{font-size:12px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+  .ra-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);}
+  .ra-row:last-child{border-bottom:none;}
+  .ra-check{display:flex;align-items:center;gap:10px;flex:1;cursor:pointer;user-select:none;}
+  .ra-box{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.15s;}
+  .ra-box .icn{color:#fff;font-size:13px;opacity:0;}
+  .ra-row.on .ra-box{background:var(--accent);border-color:var(--accent);}
+  .ra-row.on .ra-box .icn{opacity:1;}
+  .ra-name{font-size:13.5px;font-weight:700;}
+  .ra-name small{display:block;font-size:11.5px;font-weight:500;color:var(--muted);}
+  .ra-qty{display:flex;align-items:center;gap:8px;width:210px;flex-shrink:0;opacity:0.35;transition:.15s;}
+  .ra-row.on .ra-qty{opacity:1;}
+  .ra-qty input[type=range]{flex:1;height:4px;border-radius:4px;background:var(--line);outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;min-width:50px;}
+  .ra-qty input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:15px;height:15px;border-radius:50%;background:var(--accent);cursor:pointer;}
+  .ra-qty input[type=range]::-moz-range-thumb{width:15px;height:15px;border:none;border-radius:50%;background:var(--accent);cursor:pointer;}
+  .ra-qty .q{font-size:12.5px;font-weight:800;width:24px;text-align:right;font-variant-numeric:tabular-nums;color:var(--accent);}
+  .ra-qty .unit{font-size:10.5px;color:var(--muted);width:78px;line-height:1.15;}
+  .roi-divider{display:flex;align-items:center;gap:16px;margin:36px 0 28px;}
+  .roi-divider::before,.roi-divider::after{content:"";flex:1;height:1px;background:var(--line);}
+  .roi-divider span{font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--accent);}
+  .roi-grid{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;}
+  .roi-inputs{background:#fff;border-radius:16px;padding:24px;box-shadow:0 2px 16px rgba(18,45,110,0.07);position:sticky;top:20px;}
+  .roi-inputs h4{font-size:15px;font-weight:800;margin-bottom:18px;}
+  .ri-field{margin-bottom:18px;}
+  .ri-field label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;margin-bottom:7px;}
+  .ri-field label .val{font-weight:800;color:var(--accent);font-size:14px;}
+  .ri-field input[type=range]{width:100%;height:5px;border-radius:5px;background:var(--line);outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;}
+  .ri-field input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 1px 4px rgba(255,81,0,0.4);}
+  .ri-field input[type=range]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:var(--accent);cursor:pointer;}
+  .real-anchor{font-size:11.5px;font-weight:800;color:var(--accent);margin-top:7px;text-transform:uppercase;letter-spacing:0.04em;}
+  .ri-field .hint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4;}
+  .ri-pkg{display:flex;gap:6px;margin-top:4px;}
+  .ri-pkg button{flex:1;padding:8px 4px;border:1.5px solid var(--line);background:#fff;border-radius:8px;font-family:'Manrope';font-size:11.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s;line-height:1.2;}
+  .ri-pkg button.on{border-color:var(--accent);background:rgba(255,81,0,0.07);color:var(--accent);}
+  .roi-out{display:flex;flex-direction:column;gap:16px;}
+  .roi-problem{background:var(--gradient-blue);border-radius:16px;padding:24px 26px;color:#fff;}
+  .roi-problem .lbl{font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#ff8a52;margin-bottom:8px;}
+  .roi-problem .big{font-size:30px;font-weight:800;letter-spacing:-0.02em;}
+  .roi-problem .big small{font-size:14px;font-weight:600;color:rgba(255,255,255,0.7);}
+  .roi-problem p{font-size:13px;color:rgba(255,255,255,0.8);margin-top:8px;}
+  .roi-result{background:#fff;border-radius:16px;padding:24px 26px;box-shadow:0 2px 16px rgba(18,45,110,0.07);}
+  .roi-result .topline{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;}
+  .roi-kpi{flex:1;min-width:120px;}
+  .roi-kpi .lbl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;}
+  .roi-kpi .num{font-size:26px;font-weight:800;letter-spacing:-0.02em;}
+  .roi-kpi .num.accent{color:var(--accent);}
+  .roi-kpi .sub{font-size:11.5px;color:var(--muted);margin-top:2px;}
+  .stack{border-top:1px solid var(--line);padding-top:16px;}
+  .stack-h{font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+  .stack-row{display:flex;align-items:center;gap:12px;margin-bottom:9px;font-size:13px;}
+  .stack-row .nm{flex:1;font-weight:600;}
+  .stack-row .nm small{display:block;font-weight:500;color:var(--muted);font-size:11px;}
+  .stack-row .bar{flex:1.4;height:8px;background:var(--surface);border-radius:5px;overflow:hidden;}
+  .stack-row .bar i{display:block;height:100%;background:var(--gradient-orange);border-radius:5px;}
+  .stack-row .amt{width:90px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;}
+  .roi-foot{font-size:11.5px;color:var(--muted);margin-top:16px;line-height:1.5;font-style:italic;}
+  .roi-verdict{background:rgba(255,81,0,0.07);border-radius:12px;padding:16px 20px;margin-top:4px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;}
+  .roi-verdict .icn{color:var(--accent);font-size:22px;flex-shrink:0;}
+  @media(max-width:900px){.roi-grid{grid-template-columns:1fr;}.roi-inputs{position:static;}.ra-row{flex-wrap:wrap;}.ra-qty{width:100%;}}
+  .detail-block{margin-top:8px;}
+  .cmp-wrap{margin-top:8px;overflow-x:auto;}
+  .cmp{width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px;}
+  .cmp thead th{position:sticky;top:0;background:var(--white);z-index:2;}
+  .cmp th.feat-col{text-align:left;width:46%;}
+  .cmp th.pkg-col{text-align:center;width:18%;padding:16px 10px;vertical-align:bottom;}
+  .cmp th.pkg-col .pn{font-size:15px;font-weight:800;display:block;}
+  .cmp th.pkg-col .ps{font-size:11px;font-weight:600;color:var(--muted);display:block;margin-top:2px;}
+  .cmp th.pkg-col.feat-pkg{background:rgba(255,81,0,0.06);border-radius:10px 10px 0 0;}
+  .cmp th.pkg-col.feat-pkg .pn{color:var(--accent);}
+  .cmp td.feat-pkg, .cmp tr td.feat-pkg{background:rgba(255,81,0,0.04);}
+  .cmp tbody tr{border-top:1px solid var(--line);}
+  .cmp td{padding:11px 10px;vertical-align:top;}
+  .cmp td.f{color:var(--primary);font-weight:600;}
+  .cmp td.c{text-align:center;}
+  .cmp .grp td{background:var(--surface);font-size:11.5px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--primary);padding:10px;}
+  .cmp .grp td .ag{font-weight:600;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:8px;font-size:11px;}
+  .cmp .ok{color:var(--ok);font-size:17px;display:inline-flex;}
+  .cmp .no{color:rgba(18,45,110,0.22);font-size:16px;display:inline-flex;}
+  .cmp .lvl{font-size:11.5px;font-weight:700;color:var(--primary);line-height:1.25;display:inline-block;}
+  .cmp .lvl.acc{color:var(--accent);}
+  .cmp-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:14px;}
+  .cmp-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .cmp-legend .ok{color:var(--ok);font-size:15px;}
+  .cmp-legend .no{color:rgba(18,45,110,0.22);font-size:15px;}
+  .foot{padding:24px 0 50px;font-size:12px;color:var(--muted);text-align:center;border-top:1px solid var(--line);margin-top:10px;}
+  .foot b{color:var(--primary);}
+  @media(max-width:1000px){
+    .wrap,.hero{padding-left:22px;padding-right:22px;}
+    .tiers,.cats,.ladder,.ident{grid-template-columns:1fr;}
+    .ident{flex-direction:column;}.id{border-right:none;border-bottom:1px solid var(--line);}
+    .hero h1{font-size:26px;}.trust{gap:14px;}.lstep .arrow{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="hero-inner">
+    <div class="logo-row">
+      <div class="logo-badge"><svg width="13" height="16" viewBox="0 0 14 18" fill="none"><path d="M8.5 1L1 10.5H7L5.5 17L13 7.5H7L8.5 1Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/></svg></div>
+      <span class="logo-word">braingineering<span>.</span></span>
+    </div>
+    <div class="eyebrow">Engineering AI Hub · Ihr Angebot im Überblick</div>
+    <h1>Was kostet das Engineering AI Hub?</h1>
+    <p>Auf dieser Seite sehen Sie, was der Hub Ihrem Büro an Zeit und Geld bringt und was er kostet. Rechnen Sie zuerst Ihren eigenen Wert aus, dann wählen Sie das passende Paket. Die Detailfeatures zu allen Paketen finden Sie ganz unten.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- PANEL 1 -->
+<div class="panel active" id="preise">
+  <div class="block">
+
+    <div class="roi-section">
+      <div class="sec-eyebrow">Schritt 1 · Was es Ihnen bringt</div>
+      <div class="sec-title">Rechnen Sie nach, was Ihr Büro heute verliert</div>
+      <div class="sec-sub">Stellen Sie links Ihre Bürogröße und Ihren Stundensatz ein und haken Sie an, welche Aufgaben bei Ihnen anfallen. Der Rechner zeigt, wie viel Arbeitszeit heute in diese Tätigkeiten fließt und was der Hub davon realistisch einspart. Über den Realitätsfaktor stellen Sie ein, wie intensiv Ihr Büro die Helfer nutzt. Den Preis sehen Sie direkt darunter.</div>
+
+      <div class="roi-grid">
+        <div class="roi-inputs">
+          <h4>Ihr Büro</h4>
+          <div class="ri-field">
+            <label>Mitarbeiter <span class="val" id="v-ma">10</span></label>
+            <input type="range" id="i-ma" min="1" max="50" value="10">
+          </div>
+          <div class="ri-field">
+            <label>Stundensatz <span class="val" id="v-rate">95 €</span></label>
+            <input type="range" id="i-rate" min="60" max="180" step="5" value="95">
+          </div>
+          <div class="ri-field">
+            <label>Realitätsfaktor <span class="val" id="v-real">40 %</span></label>
+            <input type="range" id="i-real" min="20" max="80" step="5" value="40">
+            <div class="real-anchor" id="real-anchor">Aktiver Nutzer</div>
+            <div class="hint">Wie viel der oben errechneten Ersparnis im Alltag tatsächlich ankommt. Eingewöhnung, Nachkontrolle und Tage ohne KI-Einsatz kosten einen Teil, deshalb rechnen wir bewusst konservativ. Vorsichtig sind 20 %, aktive Nutzer erreichen mehr, Power-User das Meiste.</div>
+          </div>
+        </div>
+
+        <div class="roi-out">
+          <div class="roi-problem">
+            <div class="lbl">Was Sie der Ist-Zustand heute kostet</div>
+            <div class="big" id="o-lost">—</div>
+            <p id="o-lost-h"></p>
+          </div>
+
+          <div class="roi-agents">
+            <div class="ra-h">Was fällt bei Ihnen an? Haken Sie an und stellen Sie die Mengen ein.</div>
+            <div id="agent-list"></div>
+          </div>
+
+          <div class="roi-result">
+            <div class="topline">
+              <div class="roi-kpi">
+                <div class="lbl">Realistische Ersparnis</div>
+                <div class="num accent" id="o-save">—</div>
+                <div class="sub">pro Jahr an Arbeitszeit</div>
+              </div>
+              <div class="roi-kpi">
+                <div class="lbl">Eingesparte Zeit</div>
+                <div class="num" id="o-hours">—</div>
+                <div class="sub">Stunden pro Jahr</div>
+              </div>
+            </div>
+            <div class="stack">
+              <div class="stack-h">Woraus sich die Ersparnis zusammensetzt</div>
+              <div id="stack-rows"></div>
+            </div>
+            <div class="roi-foot">Die gezeigten Werte sind ein Beispiel und lassen sich oben jederzeit auf Ihr Büro anpassen. Konservative Annahmen pro Vorgang bzw. pro Mitarbeiter und Woche, danach auf den Realitätsfaktor heruntergerechnet. Grundlage sind Branchenstudien zum Zeitaufwand für Recherche, Dokumentation und Kommunikation (u. a. McKinsey Global Institute, Federal Reserve). Dient der Orientierung, keine Garantie eines bestimmten Ergebnisses.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roi-divider"><span>Schritt 2 · und das kostet es</span></div>
+
+    <div class="sec-eyebrow">Drei Pakete</div>
+    <div class="sec-title">Das Paket, das zu Ihrem Büro passt</div>
+    <div class="sec-sub">Jedes Paket enthält alles aus dem darunterliegenden. Ab 50 Mitarbeitern stellen wir ein individuelles Paket zusammen.</div>
+
+    <div class="tiers">
+
+      <!-- INGENIEURBÜRO -->
+      <div class="tier t1">
+        <h3>Das Gedächtnis</h3>
+        <div class="trange">bis 5 Mitarbeiter</div>
+        <div class="tdesc">Ihr gesammeltes Wissen aus Normen, Projekten und E-Mails an einem Ort durchsuchbar.</div>
+        <div class="price"><span class="amt">€5.990</span><span class="per">pro Jahr</span></div>
+        <div class="punlim"><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-infinity"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" /></svg></span>Unlimitierte Nutzung</div>
+        <div class="setup">+ Datenraum-Setup einmalig €849,-</div>
+        <div class="div"></div>
+        <div class="flabel">3 Wissens-Helfer Ihrer Wahl:</div>
+        <ul class="f">
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-scale"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />  <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />  <path d="M7 21h10" />  <path d="M12 3v18" />  <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" /></svg></span><span>Normen mit belegter Quelle, statt unsicher zu raten</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-shield-check"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />  <path d="m9 12 2 2 4-4" /></svg></span><span>Antworten aus Ihren eigenen Unterlagen, nicht aus dem Internet</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-badge-check"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />  <path d="m9 12 2 2 4-4" /></svg></span><span>Prüfsiegel zu jeder Antwort: belegt, nachgerechnet, widerspruchsfrei</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-folder-search"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M10.7 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v4.1" />  <path d="m21 21-1.9-1.9" />  <circle cx="17" cy="17" r="3" /></svg></span><span>Frühere Projekte in Sekunden gefunden, statt lange zu suchen</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-mail"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect width="20" height="16" x="2" y="4" rx="2" />  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg></span><span>E-Mails nach Inhalt durchsucht, auch wenn der Betreff nichts hergibt</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-users"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />  <circle cx="9" cy="7" r="4" />  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />  <path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg></span><span>Sofort wissen, wer im Büro was gemacht hat und wen man fragt</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-book-open"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M12 7v14" />  <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" /></svg></span><span>Internes Wissen und Abläufe im eigenen Wiki, jederzeit abrufbar</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-headset"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />  <path d="M21 16v2a4 4 0 0 1-4 4h-5" /></svg></span><span>Support: E-Mail-Hilfe an Werktagen</span></li>
+        </ul>
+        <div class="spacer"></div>
+        <button class="cta" style="background:transparent;color:#122D6E;border:1.5px solid rgba(18,45,110,0.3);">Paket wählen <span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-arrow-right"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M5 12h14" />  <path d="m12 5 7 7-7 7" /></svg></span></button>
+      </div>
+
+      <!-- PLANUNGSBÜRO -->
+      <div class="tier feat t2">
+        <div class="pop">Empfohlen</div>
+        <h3>Die Ingenieurskunst</h3>
+        <div class="trange">bis 20 Mitarbeiter</div>
+        <div class="tdesc">Die operativen Werkzeuge für Ausschreibung, Leistungsverzeichnis, Angebot, Gutachten und Protokoll.</div>
+        <div class="price"><span class="amt">€10.790</span><span class="per">pro Jahr</span></div>
+        <div class="punlim"><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-infinity"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" /></svg></span>Unlimitierte Nutzung</div>
+        <div class="setup">+ Vorlagen-Setup einmalig €949,-</div>
+        <div class="div"></div>
+        <div class="flabel">6 Helfer, ganze Wissensbasis, dazu:</div>
+        <div class="hl">
+          <ul>
+            <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-clipboard-list"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />  <path d="M12 11h4" />  <path d="M12 16h4" />  <path d="M8 11h.01" />  <path d="M8 16h.01" /></svg></span><span><b>Ausschreibungen prüfen</b> und <b>Leistungsverzeichnisse</b> screenen</span></li>
+            <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-mic"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />  <path d="M19 10v2a7 7 0 0 1-14 0v-2" />  <line x1="12" x2="12" y1="19" y2="22" /></svg></span><span><b>Gutachten und Protokolle</b> per Sprache, Checkliste und Foto</span></li>
+            <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-file-pen"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5" />  <path d="M14 2v4a2 2 0 0 0 2 2h4" />  <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z" /></svg></span><span><b>Angebote</b> mit Positionen, Mengen und Live-Kalkulation aus Ausschreibung oder Vorlage</span></li>
+            <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-file-text"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />  <path d="M14 2v4a2 2 0 0 0 2 2h4" />  <path d="M16 13H8" />  <path d="M16 17H8" />  <path d="M10 9H8" /></svg></span><span><b>Umfangreiche Berichte</b> bis über 100 Seiten per Knopfdruck</span></li>
+          </ul>
+        </div>
+        <ul class="f">
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-database"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <ellipse cx="12" cy="5" rx="9" ry="3" />  <path d="M3 5V19A9 3 0 0 0 21 19V5" />  <path d="M3 12A9 3 0 0 0 21 12" /></svg></span><span>Die KI greift auf Ihr Archiv und Postfach zu, nicht nur auf Allgemeinwissen</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-file-text"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />  <path d="M14 2v4a2 2 0 0 0 2 2h4" />  <path d="M10 9H8" />  <path d="M16 13H8" />  <path d="M16 17H8" /></svg></span><span>Berichte und Gutachten in Ihrem Layout, ohne sie selbst zu tippen</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-headset"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />  <path d="M21 16v2a4 4 0 0 1-4 4h-5" /></svg></span><span>Support: bevorzugte Bearbeitung, telefonisch und per E-Mail</span></li>
+        </ul>
+        <div class="spacer"></div>
+        <button class="cta" style="background:#FF5100;color:#fff;">Paket wählen <span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-arrow-right"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M5 12h14" />  <path d="m12 5 7 7-7 7" /></svg></span></button>
+      </div>
+
+      <!-- GENERALPLANUNG -->
+      <div class="tier t3">
+        <h3>Ingenieurbüro 4.0</h3>
+        <div class="trange">21 bis 50 Mitarbeiter</div>
+        <div class="tdesc">Alle Helfer in der Profi-Variante, alles vernetzt, ein eigener Assistent für jede Person.</div>
+        <div class="price"><span class="amt">€19.190</span><span class="per">pro Jahr</span></div>
+        <div class="punlim"><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-infinity"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" /></svg></span>Unlimitierte Nutzung</div>
+        <div class="setup">Setup inklusive</div>
+        <div class="div"></div>
+        <div class="flabel">Alle Helfer als Profi-Variante, dazu:</div>
+        <div class="hl">
+          <ul>
+            <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-workflow"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <rect width="8" height="8" x="3" y="3" rx="2" />  <path d="M7 11v4a2 2 0 0 0 2 2h4" />  <rect width="8" height="8" x="13" y="13" rx="2" /></svg></span><span><b>Ragnar, der Orchestrator,</b> steuert alle Helfer zusammen für komplexe Abläufe</span></li>
+            <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-user-round"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="12" cy="8" r="5" />  <path d="M20 21a8 8 0 0 0-16 0" /></svg></span><span><b>Eigener Assistent für jede Person</b> im Büro</span></li>
+            <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-file-text"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />  <path d="M14 2v4a2 2 0 0 0 2 2h4" />  <path d="M10 9H8" />  <path d="M16 13H8" />  <path d="M16 17H8" /></svg></span><span><b>Volle Berichts-Engine,</b> eigene Vorlagen per Drag-and-drop, unbegrenzt</span></li>
+          </ul>
+        </div>
+        <ul class="f">
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-sliders-horizontal"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <line x1="21" x2="14" y1="4" y2="4" />  <line x1="10" x2="3" y1="4" y2="4" />  <line x1="21" x2="12" y1="12" y2="12" />  <line x1="8" x2="3" y1="12" y2="12" />  <line x1="21" x2="16" y1="20" y2="20" />  <line x1="12" x2="3" y1="20" y2="20" />  <line x1="14" x2="14" y1="2" y2="6" />  <line x1="8" x2="8" y1="10" y2="14" />  <line x1="16" x2="16" y1="18" y2="22" /></svg></span><span>Alle Helfer in der Profi-Stufe: Voice-Diktat, Checklisten-Engine, ÖNORM-Zuordnung, Projektgedächtnis</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-link"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg></span><span>Eine Suche über Archiv, Postfach und Projektablage zugleich</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-building-2"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />  <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />  <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />  <path d="M10 6h4" />  <path d="M10 10h4" />  <path d="M10 14h4" />  <path d="M10 18h4" /></svg></span><span>Mehrere Standorte getrennt verwaltbar</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-palette"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />  <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />  <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />  <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" /></svg></span><span>Eigenes Branding im Erscheinungsbild Ihres Hauses</span></li>
+          <li><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-badge-check"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />  <path d="m9 12 2 2 4-4" /></svg></span><span>Support: fester Ansprechpartner mit zugesagten Reaktionszeiten</span></li>
+        </ul>
+        <div class="spacer"></div>
+        <button class="cta" style="background:transparent;color:#122D6E;border:1.5px solid rgba(18,45,110,0.3);">Gespräch anfragen <span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-arrow-right"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M5 12h14" />  <path d="m12 5 7 7-7 7" /></svg></span></button>
+      </div>
+    </div>
+
+    <div class="indiv">
+      <div class="ic"><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-headset"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" />  <path d="M21 16v2a4 4 0 0 1-4 4h-5" /></svg></span></div>
+      <div>
+        <h4>Ab 50 Mitarbeitern: individuelles Paket</h4>
+        <p>Bei größeren Häusern und Konzernen mit mehreren Standorten stellen wir ein maßgeschneidertes Paket zusammen, weil ab dieser Größe ein Pauschalpreis weder Ihrem Bedarf noch dem tatsächlichen Nutzen gerecht wird.</p>
+      </div>
+    </div>
+
+    <div class="trust">
+      <span><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-shield-check"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />  <path d="m9 12 2 2 4-4" /></svg></span>Ihre Daten bleiben in Österreich und der EU</span>
+      <span><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-infinity"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" /></svg></span>Unlimitierte Nutzung, kein Preis pro Kopf</span>
+      <span><span class="icn"><!-- @license lucide-static v0.460.0 - ISC --><svg  class="lucide lucide-landmark"  xmlns="http://www.w3.org/2000/svg"  width="1em"  height="1em"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">  <line x1="3" x2="21" y1="22" y2="22" />  <line x1="6" x2="6" y1="18" y2="11" />  <line x1="10" x2="10" y1="18" y2="11" />  <line x1="14" x2="14" y1="18" y2="11" />  <line x1="18" x2="18" y1="18" y2="11" />  <polygon points="12 2 20 7 4 7" /></svg></span>Bis zu €9.900 Förderung in Niederösterreich</span>
+    </div>
+    <div class="onb">
+      Alle Preise netto zzgl. 20 % USt.
+    </div>
+  </div>
+
+  
+  <div class="roi-divider" style="margin-top:48px;"><span>Detailfeatures · was die Pakete im Detail liefern</span></div>
+
+<div class="block">
+  <div class="cmp-wrap">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th class="feat-col"></th>
+          <th class="pkg-col"><span class="pn">Das Gedächtnis</span><span class="ps">bis 5 MA</span></th>
+          <th class="pkg-col feat-pkg"><span class="pn">Die Ingenieurskunst</span><span class="ps">bis 20 MA</span></th>
+          <th class="pkg-col"><span class="pn">Ingenieurbüro 4.0</span><span class="ps">21–50 MA</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="grp"><td colspan="4">Wissen &amp; Recherche<span class="ag">Normbert · Archibald · Mailanie · Kennjamin · Viktor</span></td></tr>
+        <tr><td class="f">Normen mit belegter Quelle, jede Aussage mit Norm, Abschnitt und Seite</td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Prüfsiegel zu jeder Antwort: belegt, nachgerechnet, widerspruchsfrei</td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Antworten aus Ihren eigenen Unterlagen statt aus dem Internet</td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Projektarchiv inhaltlich durchsuchen</td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">E-Mails nach Inhalt durchsuchen</td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Wer im Büro was gemacht hat und wen man fragt</td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Internes Wissen und Abläufe im eigenen Wiki</td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Eine Suche über Archiv, Postfach und Projektablage zugleich</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Große Archive anbinden, mehrere TB, eigener Server</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Frei wählbare Wissens-Helfer</td><td class="c"><span class="lvl">3 Stück</span></td><td class="c feat-pkg"><span class="lvl acc">alle</span></td><td class="c"><span class="lvl">alle</span></td></tr>
+        <tr class="grp"><td colspan="4">Berichte &amp; Protokolle<span class="ag">Gutachtrude · Protokolliver</span></td></tr>
+        <tr><td class="f">Protokolle aus Text strukturieren (Beschlüsse, Aufgaben, offene Punkte)</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Gutachten und Befunde mit Foto und PDF im Branding</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Diktat per Voice-Agent in Echtzeit, Audio-Transkription</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Checklisten-Engine (z. B. B1300, 40+ Punkte)</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Automatische ÖNORM-Zuordnung je Mangel</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Aufgaben-Verfolgung und Projektgedächtnis über alle Protokolle</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr class="grp"><td colspan="4">Ausschreibung, LV &amp; Angebote<span class="ag">Bietmar · Elvira · Angebjörn</span></td></tr>
+        <tr><td class="f">Ausschreibungen prüfen: Fristen, Leistungen, Eignung, Match-Score</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Leistungsverzeichnisse nach ÖNORM A 2063 erzeugen und prüfen</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Angebote mit Positionen, Mengen und Live-Kalkulation</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Plan-zu-ONLV: Mengen automatisch aus IFC/DXF/DWG</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">TED-/Vergabe-Websuche nach laufenden Ausschreibungen</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr class="grp"><td colspan="4">Berichts-Engine<span class="ag">Dokument-Komposer</span></td></tr>
+        <tr><td class="f">Fertige Dokumente in Ihrem Layout</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="lvl acc">Vorlagensatz von uns</span></td><td class="c"><span class="lvl">frei gestaltbar</span></td></tr>
+        <tr><td class="f">Eigene Vorlagen und Berichtstypen per Drag-and-drop</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Umfang je Bericht</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="lvl acc">über 100 Seiten</span></td><td class="c"><span class="lvl">bis 150 Seiten</span></td></tr>
+        <tr><td class="f">Eigenes Branding (Logo, Farben, Footer)</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr class="grp"><td colspan="4">Chat &amp; Orchestrierung<span class="ag">Chatgar · Ragnar</span></td></tr>
+        <tr><td class="f">Eigener KI-Assistent für jede Person im Büro</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Ragnar-Orchestrator steuert alle Helfer für komplexe Abläufe</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr><td class="f">Mehrere Standorte getrennt verwaltbar</td><td class="c"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c feat-pkg"><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span></td><td class="c"><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></td></tr>
+        <tr class="grp"><td colspan="4">Betreuung<span class="ag"></span></td></tr>
+        <tr><td class="f">Support</td><td class="c"><span class="lvl">E-Mail, werktags</span></td><td class="c feat-pkg"><span class="lvl acc">bevorzugt, Tel. + E-Mail</span></td><td class="c"><span class="lvl">fester Ansprechpartner</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cmp-legend">
+    <span><span class="ok"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span> enthalten</span>
+    <span><span class="no"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg></span> nicht enthalten</span>
+    <span>Text = Umfang in dieser Stufe</span>
+  </div>
+</div>
+</div>
+
+<div class="foot">
+  Engineering AI Hub · Preise netto zzgl. 20 % USt., jährlich.
+</div>
+
+</div>
+
+<script>
+  // ===== ROI-RECHNER mit ankreuzbaren Agenten =====
+  (function(){
+    const f = n => n.toLocaleString('de-DE',{maximumFractionDigits:0});
+    const eur = n => '€'+f(n);
+
+    // Tätigkeiten statt Agenten, nach Gruppen. 
+    // [id, Tätigkeit, gruppe, einheit, default, max, step, ersp_h, proMA]
+    // einheit-Multiplikator auf Jahr: 'w'=46 Wochen, 'm'=12 Monate
+    const AGENTS = [
+      ['norm','Normen recherchieren','Wissen & Recherche','w',3,10,1,0.3,true],
+      ['arch','Projektarchiv durchsuchen','Wissen & Recherche','w',3,10,1,0.25,true],
+      ['mfind','E-Mails inhaltlich finden','Wissen & Recherche','w',4,12,1,0.2,true],
+      ['wiss','Internes Wissen & Zuständigkeiten finden','Wissen & Recherche','w',1,6,1,0.3,true],
+      ['pauf','Protokolle aufnehmen','Protokolle','w',4,15,1,0.3,false],
+      ['pschr','Protokolle schreiben & strukturieren','Protokolle','w',4,15,1,0.6,false],
+      ['pzus','Protokolle zusammenfassen & verteilen','Protokolle','w',4,15,1,0.3,false],
+      ['ascr','Ausschreibungen screenen','Ausschreibungen','m',6,25,1,0.4,false],
+      ['aana','Ausschreibungen analysieren','Ausschreibungen','m',2,12,1,2.5,false],
+      ['averf','Ausschreibungen verfassen','Ausschreibungen','m',1,8,1,5.0,false],
+      ['gauf','Begehung aufnehmen (Sprache, Foto)','Gutachten & Befunde','m',4,25,1,0.8,false],
+      ['gerst','Gutachten & Befund erstellen','Gutachten & Befunde','m',4,25,1,2.2,false],
+      ['lvschr','Leistungsverzeichnisse schreiben','Leistungsverzeichnisse','m',2,12,1,2.5,false],
+      ['lvpr','Leistungsverzeichnisse prüfen','Leistungsverzeichnisse','m',3,15,1,1.5,false],
+      ['ang','Angebote erstellen','Angebote & Kommunikation','m',6,25,1,0.9,false],
+      ['mschr','E-Mails schreiben','Angebote & Kommunikation','w',8,25,1,0.08,true],
+    ];
+    const MULT = {w:46, m:12};
+    const EINHEIT = {w:'pro Woche', m:'pro Monat'};
+
+    const state = {};
+    AGENTS.forEach(a => state[a[0]] = {on:true, qty:a[4]});
+
+    // Liste rendern, nach Gruppen
+    const checkSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    const list = document.getElementById('agent-list');
+    const gruppen = [...new Set(AGENTS.map(a=>a[2]))];
+    list.innerHTML = gruppen.map(grp=>{
+      const items = AGENTS.filter(a=>a[2]===grp);
+      const rows = items.map(a=>{
+        const [id,name,g,einh,def,max,step,ersp,perma] = a;
+        const unit = EINHEIT[einh] + (perma ? ' / MA' : '');
+        return `<div class="ra-row on" id="row-${id}">
+          <div class="ra-check" data-id="${id}">
+            <div class="ra-box"><span class="icn">${checkSvg}</span></div>
+            <div class="ra-name">${name}</div>
+          </div>
+          <div class="ra-qty"><input type="range" id="q-${id}" min="0" max="${max}" step="${step}" value="${def}"><span class="q" id="qv-${id}">${def}</span><span class="unit">${unit}</span></div>
+        </div>`;
+      }).join('');
+      return `<div class="ra-group"><div class="ra-grp-h">${grp}</div>${rows}</div>`;
+    }).join('');
+
+    const inMa = document.getElementById('i-ma');
+    const inRate = document.getElementById('i-rate');
+    const inReal = document.getElementById('i-real');
+
+    function calc(){
+      const ma = +inMa.value, rate = +inRate.value, real = +inReal.value/100;
+      document.getElementById('v-ma').textContent = ma;
+      document.getElementById('v-rate').textContent = rate+' €';
+      document.getElementById('v-real').textContent = inReal.value+' %';
+      const rv = +inReal.value;
+      const anchor = rv<=25 ? 'Vorsichtig gerechnet'
+        : rv<=45 ? 'Aktiver Nutzer'
+        : rv<=65 ? 'Intensive Nutzung'
+        : 'Power-User · Super-Saver';
+      document.getElementById('real-anchor').textContent = anchor;
+
+      let h_roh = 0;
+      const grpSum = {};
+      AGENTS.forEach(a=>{
+        const [id,name,grp,einh,def,max,step,ersp,perma] = a;
+        const st = state[id];
+        if(!st.on) return;
+        const anz = st.qty * MULT[einh] * (perma ? ma : 1);
+        const h = anz * ersp;
+        h_roh += h;
+        grpSum[grp] = (grpSum[grp]||0) + h*real;
+      });
+
+      const wert_roh = h_roh*rate;
+      const wert_real = wert_roh*real;
+      const h_real = h_roh*real;
+
+      document.getElementById('o-lost').innerHTML = eur(wert_roh)+' <small style="font-size:14px;font-weight:600;opacity:.7">pro Jahr</small>';
+      document.getElementById('o-lost-h').textContent =
+        f(h_roh)+' Stunden im Jahr fließen heute in diese Aufgaben, bevor überhaupt Ingenieursarbeit beginnt.';
+      document.getElementById('o-save').textContent = eur(wert_real);
+      document.getElementById('o-hours').textContent = f(h_real)+' h';
+
+      const rows = Object.entries(grpSum).map(([g,v])=>[g, v*rate]);
+      const max = Math.max(...rows.map(r=>r[1]), 1);
+      document.getElementById('stack-rows').innerHTML = rows.length
+        ? rows.sort((a,b)=>b[1]-a[1]).map(r=>
+            `<div class="stack-row"><div class="nm">${r[0]}</div>`+
+            `<div class="bar"><i style="width:${r[1]/max*100}%"></i></div>`+
+            `<div class="amt">${eur(r[1])}</div></div>`).join('')
+        : '<div style="font-size:13px;color:var(--muted)">Haken Sie oben an, was bei Ihnen anfällt.</div>';
+    }
+
+    // Events
+    document.querySelectorAll('.ra-check').forEach(c=>{
+      c.addEventListener('click', ()=>{
+        const id = c.dataset.id;
+        state[id].on = !state[id].on;
+        document.getElementById('row-'+id).classList.toggle('on', state[id].on);
+        calc();
+      });
+    });
+    AGENTS.forEach(a=>{
+      const q = document.getElementById('q-'+a[0]);
+      q.addEventListener('input', ()=>{
+        state[a[0]].qty = +q.value;
+        document.getElementById('qv-'+a[0]).textContent = q.value;
+        calc();
+      });
+    });
+    [inMa,inRate,inReal].forEach(el=>el.addEventListener('input',calc));
+    calc();
+  })();
+</script>
+
+</body>
+</html>
